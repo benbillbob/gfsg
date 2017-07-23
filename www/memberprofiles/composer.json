@@ -1,0 +1,36 @@
+{
+	"name": "symbiote/silverstripe-memberprofiles",
+	"description": "Member registration and profile management",
+	"type": "silverstripe-module",
+	"keywords": ["silverstripe", "member", "profile", "registration"],
+	"license": "BSD-3-Clause",
+	"authors": [
+		{
+			"name": "Andrew Short",
+			"email": "andrewjshort@gmail.com"
+		}
+	],
+	"require": {
+		"silverstripe/framework": "3.*",
+		"silverstripe/cms": "3.*"
+	},
+	"suggest": {
+		"ajshort/silverstripe-gridfieldextensions": "Allows drag-and-drop reordering of fields"
+	},
+	"extra": {
+		"installer-name": "memberprofiles",
+		"branch-alias": {
+			"dev-master": "2.0.x-dev"
+		},
+		"screenshots": [
+			"http://ajshort.github.com/silverstripe-memberprofiles/screenshots/edit-profile.png",
+			"http://ajshort.github.com/silverstripe-memberprofiles/screenshots/cms-profile-fields.png",
+			"http://ajshort.github.com/silverstripe-memberprofiles/screenshots/member-list.png"
+		]
+	},
+	"replace": {
+		"silverstripe/memberprofiles": "self.version",
+		"ajshort/silverstripe-memberprofiles": "self.version",
+		"silverstripe-australia/memberprofiles": "self.version"
+	}
+}

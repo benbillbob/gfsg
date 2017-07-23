@@ -1,0 +1,11 @@
+#!/bin/bash
+
+clear
+
+php www/framework/cli-script.php dev/build "$@"
+
+
+echo
+echo complete
+echo
+

@@ -1,0 +1,4 @@
+<Files *.yml>
+Order deny,allow
+Deny from all
+</Files>

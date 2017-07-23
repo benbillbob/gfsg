@@ -1,0 +1,23 @@
+#!/bin/bash
+
+if [ -z "$1" ]
+  then
+    echo "pass the name of the task to run"
+    php www/framework/cli-script.php dev/tasks
+    exit
+fi
+
+clear
+
+echo Updating membership
+
+TASK=$1
+echo $TASK
+shift
+php www/framework/cli-script.php dev/tasks/$TASK  $@
+
+
+echo
+echo complete
+echo
+

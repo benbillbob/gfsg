@@ -1,0 +1,13 @@
+de:
+  _config:
+    WRONG_MODULE_FOLDER: 'Der Ordner "{folderName}" muß in "{moduleName}" umbenannt werden, um das {moduleName} Module nutzen zu können.'
+
+  cwsShortCodeHideMailto:
+    SUBJECT: 'Betreff'
+
+  cwsShortCodeRandomQuote:
+    DEFAULT_QUOTE: 'Nur wer selbst brennt, kann Feuer in anderen entfachen.'
+    DEFAULT_AUTHOR: 'Augustinus'
+
+  RandomQuote:
+    QUOTE_HEADING: 'Worte mit auf den Weg gegeben'

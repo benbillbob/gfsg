@@ -1,0 +1,27 @@
+/**
+ * Module: cwsoft-shortcode
+ * Provides some handy shortcode methods ready to use from your CMS SilverStripe WYSIWYG editor.
+ *
+ * This file contains the CSS definitions for the shortcode: [cwsRandomQuote]
+ *
+ * LICENSE: GNU General Public License 3.0
+ * 
+ * @platform    CMS SilverStripe 3
+ * @package     cwsoft-shortcode
+ * @author      cwsoft (http://cwsoft.de)
+ * @copyright   cwsoft
+ * @license     http://www.gnu.org/licenses/gpl-3.0.html
+*/
+
+div.cwsShortCodeRandomQuote {
+	float: right;
+	width: 90%;
+	margin: 1.5em 5% 1.5em 5%;
+	padding: 0.5em; 
+	padding: 0.5em;
+	border: 1px solid #aaa; 
+	font: 125%/120% Calibri, Arial, Helvetica, sans-serif; 
+	text-align: center;
+	background: #f2f2e6;
+	color: #333; 
+}

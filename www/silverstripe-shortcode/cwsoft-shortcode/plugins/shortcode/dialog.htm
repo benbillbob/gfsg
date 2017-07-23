@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>{#shortcode.dlg_title}</title>
+	<script type="text/javascript" src="../../../framework/thirdparty/tinymce/tiny_mce_popup.js"></script>
+	<script type="text/javascript" src="./js/dialog.js"></script>
+</head>
+<body>
+
+<form onsubmit="ShortcodeDialog.insert();return false;" action="#">
+	<p>{#shortcode.dlg_description}</p>
+	
+	<select id="selectedShortcode" name="selectedShortcode" size="8" style="width: 20em;">
+		<option value="[cwsRandomQuote csv_file='quotes.csv']">[cwsRandomQuote]</option>
+		<option value="[cwsRandomImage folder='imagefolder' align='left|right']">[cwsRandomImage]</option>
+		<option value="[cwsHideMailto email='yourmail@domain.com' subject='optional_mail_subject']mail_link_text[/cwsHideMailto]">[cwsHideMailto]</option>
+	</select>
+
+	<p>
+		<strong>{#shortcode.dlg_infos}: </strong>
+		<a href="https://github.com/cwsoft/silverstripe-cwsoft-shortcode#readme" target="_blank">GitHub README</a>
+	</p>
+	
+	<div class="mceActionPanel">
+		<input type="button" id="insert" name="insert" value="{#insert}" onclick="ShortcodeDialog.insert();" />
+		<input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
+	</div>
+</form>
+
+</body>
+</html>

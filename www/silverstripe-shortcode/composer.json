@@ -1,0 +1,21 @@
+{
+    "name": "cwsoft/silverstripe-cwsoft-shortcode",
+    "type": "silverstripe-module",
+    "description": "Adds some handy shortcodes allowing you to obfuscate email links, display random images or random quotes on your Silverstripe CMS website.",
+    "keywords": ["silverstripe", "shortcodes", "cwsoft-shortcode", "cwsoft"],
+    "homepage": "https://github.com/cwsoft/silverstripe-cwsoft-shortcode",
+    "license": "GNU General Public License (GPL) v3.0",
+    "authors": [
+        {
+            "name": "cwsoft",
+            "email": "info@cwsoft.de",
+            "homepage": "http://cwsoft.de",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "silverstripe/framework": "3.*",
+        "silverstripe/cms": "3.*"
+    }
+}

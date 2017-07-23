@@ -1,0 +1,13 @@
+en:
+  _config:
+    WRONG_MODULE_FOLDER: 'Please rename the folder "{folderName}" into "{moduleName}" to get the {moduleName} module working properly.'
+
+  cwsShortCodeHideMailto:
+    SUBJECT: 'Subject'
+
+  cwsShortCodeRandomQuote:
+    DEFAULT_QUOTE: 'Only who puts his heart and soul in it, can ignite the fire in others.'
+    DEFAULT_AUTHOR: 'Augustinus'
+
+  RandomQuote:
+    QUOTE_HEADING: 'Some thoughts on your way'
