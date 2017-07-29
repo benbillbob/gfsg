@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="b4ade85c-dcf4-434c-8dde-860ab0725cbe" name="gfsg" url="http://gfsg.benbillbob.com">
+        <fileTransfer host="gfsg.benbillbob.com" port="22" privateKey="E:\anathor.pri.ppk" rootFolder="/home/ben" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
