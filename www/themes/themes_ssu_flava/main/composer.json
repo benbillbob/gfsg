@@ -1,0 +1,30 @@
+{
+    "name": "sunnysideup/themes_ssu_flava_main",
+    "type": "silverstripe-theme",
+    "description": "Sunny Side Up Theme",
+    "keywords": [
+        "themes",
+        "theme",
+        "template",
+        "basic",
+        "silverstripe",
+        "install",
+        "boilerplate",
+        "Sunny Side Up"
+    ],
+    "license": "Sunny Side Up (BSD-3-Clause and CUSTOM)",
+    "authors": [
+        {
+            "name": "Nicolaas Francken",
+            "email": "modules@sunnysideup.co.nz",
+            "role": "lead developer"
+        }
+    ],
+    "require": {
+        "silverstripe/framework": "~3.4",
+        "silverstripe/cms": "~3.4"
+    },
+    "extra": {
+        "installer-name": "main"
+    }
+}

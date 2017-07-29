@@ -1,0 +1,11 @@
+#!/bin/bash
+
+clear
+
+php www/framework/cli-script.php dev/build flush=1
+
+
+echo
+echo complete
+echo
+

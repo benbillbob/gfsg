@@ -7,7 +7,6 @@
         <input type="hidden" name="item_name" value="$ItemName" /><!-- Shortcode -->
         <input type="hidden" name="item_number" value="$ItemNumber"><!-- Shortcode -->
         <input type="hidden" name="amount" value="$Amount" /><!-- Shortcode -->
-        <input type="hidden" name="custom" value="$Custom" /><!-- Shortcode -->
         <input type="hidden" name="currency_code" value="$CurrencyCode" /><!-- SiteConfig -->
         <input type="hidden" name="return" value="$Return" /><!-- SiteConfig -->
         <input type="hidden" name="cancel_return" value="$Cancel" /><!-- SiteConfig -->

@@ -9,7 +9,7 @@ class MiniCartPageExtension extends DataExtension
 
     public static function MiniCartItemShortCode($arguments, $content = null, $parser = null)
     {
-         if (empty($arguments['name']) || empty($arguments['price'])) return;
+        if (empty($arguments['name']) || empty($arguments['price'])) return;
         $item_name = $arguments['name'];
         $item_number = (isset($arguments['sku'])) ? $arguments['sku'] : null;
         $item_price = $arguments['price'];
@@ -22,17 +22,16 @@ class MiniCartPageExtension extends DataExtension
                 'Amount' => $item_price,
                 'Button' => $button,
                 'Business' => MiniCart::get_business_email(),
-				'Custom' => Member::currentUser()->ID,
                 'CurrencyCode' => MiniCart::get_currency_code(),
                 'Return' => MiniCart::get_return_page(),
                 'Cancel' => MiniCart::get_cancel_page()
             )
         );
-		
-		return $data->renderWith('MiniCartItem');
+
+        return $data->renderWith('MiniCartItem');
     }
-	
-	public function ViewCartButton($button = 'View cart')
+
+    public function ViewCartButton($button = 'View cart')
     {
         $config = SiteConfig::current_site_config();
         $data = new ArrayData(
@@ -51,7 +50,7 @@ class MiniCartPageExtension extends DataExtension
         $settings = MiniCart::getMiniCartConfig();
         $config = SiteConfig::current_site_config();
         Requirements::javascript(MODULE_MINICART_DIR . '/bower_components/minicart/dist/' . $minicart);
-        Requirements::customScript('paypal.minicart.render(' . $settings . ');', 'minicart');
+        //Requirements::customScript('paypal.minicart.render(' . $settings . ');', 'minicart');
         // reset cart after successful checkout
         if (isset($_GET['ppsuccess']) || $this->owner->ID == $config->MiniCartReturnPageID) {
             Requirements::customScript('paypal.minicart.reset();', 'minicart_reset');

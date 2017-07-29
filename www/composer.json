@@ -8,10 +8,10 @@
 		"silverstripe/reports": "3.6.1",
 		"silverstripe/siteconfig": "3.6.1",
 		"silverstripe-themes/simple": "3.1.*",
-		"rywa/silverstripe-minicart": "^1.0",
 		"cwsoft/silverstripe-shortcode": "^2.2",
 		"symbiote/silverstripe-memberprofiles": "^2.0",
-		"sunnysideup/themes_ssu_flava": "^4.2"
+		"sunnysideup/themes_ssu_flava": "^4.2",
+		"rywa/silverstripe-minicart": "^1.0"
 	},
 	"require-dev": {
 		"phpunit/PHPUnit": "~3.7@stable"

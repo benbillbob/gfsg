@@ -17,6 +17,15 @@ private static $db = array (
 }
 
 include('ipn.php');
+include('PayPalPDT.php');
+
+class PayPalItem
+{
+	public $itemName;
+	public $itemNumber;
+	public $itemQuantity;
+	public $itemAmount;
+}
 
 class PayPalReturnPage_Controller extends Page_Controller 
 {
@@ -37,90 +46,39 @@ class PayPalReturnPage_Controller extends Page_Controller
 		}
 		
 		$tx = $this->getRequest()->getVar('tx');
-		if ($tx === NULL)
-		{
-			Debug::message("No TX Provided in url");
-			return "No transaction found. Please contact support.";
-		}
-
-		if ($this->isProcessed($tx, $member))
-		{
-			Debug::message("Processed Already - ". $tx);
-			return $this->renderMemberInfo($member);
-		}
-		
-		Debug::Message("Current Member TX - " . $member->TxnId);
 		
 		$ipn = new Ipn();
-		$use_sandbox = SiteConfig::current_site_config()->MiniCartTestMode;
-		$authToken = SiteConfig::current_site_config()->MiniCartAuthToken;
-		
-		$response = $ipn->processTx($tx, $authToken, $use_sandbox);
-		
-		Debug::show($response);
+		$paypalPDT = new PayPalPDT();
 
-		if (!$this->validateResponse($response))
+		$invoice;
+		
+		try
 		{
-			return $this->FailureContent;
+			$invoice = $paypalPDT->getDetails($ipn, $tx);
+		}
+		catch (PayPalPDTException $ex)
+		{
+			return $ex->getMessage();
 		}
 		
-		$values = $this->getValues($response);
-
-		if ($values['payment_status'] != "Completed")
-		{
-			return $this->PendingContent;
-		}
-		
-		$memberNumber = $values['custom'];
-		
-		Debug::Message("Member number - " . $member->ID);
-		if ($member->ID != $memberNumber)
+		if ($member->ID != $invoice->MemberID)
 		{
 			$this->FailureContent = "Incorrect member processing. Please contact support.";
 			return $this->FailureContent;
 		}
 		
-		$itemNumber = $values['item_number1'];
-		$itemPrice = $values['mc_gross_1'];
+		return $invoice->processPurchase();
 		
-		$withJournal = false;
-		$membership = Membership::get()->filter('ItemNumber', $itemNumber)->first();
-		if ($membership)
-		{
-			$membershipAmount = $membership->Amount;
-		}
-		else
-		{
-			$membership = Membership::get()->filter('ItemNumberWithJournal', $itemNumber)->first();
-			if ($membership)
-			{
-				$membershipAmount = $membership->AmountWithJournal;
-				$withJournal = true;
-			}
-		}
+		// $membershipexpiry = $this->addmonths($membership->membershipmonths);
 		
-		if (!membership)
-		{
-			Debug::message('Membership not found');
-			Debug::Show($itemNumber);
-			$this->FailureContent = "Incorrect member processing. Please contact support.";
-			return $this->FailureContent;
-		}
-		
-		if ($membershipAmount != $itemPrice)
-		{
-			Debug::message('Membership price mismatch');
-			Debug::Show($itemPrice);
-			Debug::Show($membershipAmount);
-			$this->FailureContent = "Membership price mismatch. Please contact support.";
-			return $this->FailureContent;
-		}	
-
-		$membershipExpiry = $this->addMonths($membership->MembershipMonths);
-		
-		$this->updateMember($member, $tx, $membership, $membershipExpiry, $withJournal);
+		// $this->updatemember($member, $tx, $membership, $membershipexpiry, $withjournal);
 		
 		return $this->SuccessContent;
+	}
+	
+	private function processPurchase($invoice)
+	{
+		
 	}
 	
 	private function addMonths($months)
@@ -148,27 +106,6 @@ class PayPalReturnPage_Controller extends Page_Controller
 	private function renderMemberInfo($member)
 	{
 		return $member->renderWith('MemberProfileFieldsSection');
-	}
-	
-	private function validateResponse($response)
-	{
-		if (strpos($response, "SUCCESS") !== false) {
-            return true;
-		}
-		
-		return false;
-	}
-	
-	private function getValues($data)
-	{
-		$lines = explode("\n", trim($data));
-		$keyarray = array();
-		for ($i = 1; $i < count($lines); $i++) {
-			$temp = explode("=", $lines[$i],2);
-			$keyarray[urldecode($temp[0])] = urldecode($temp[1]);
-		}
-		
-		return $keyarray;
 	}
 	
 	private function updateMember($member, $tx, $membership, $membershipExpiry, $withJournal)

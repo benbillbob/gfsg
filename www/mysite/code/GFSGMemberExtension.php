@@ -1,14 +1,18 @@
 <?php
 class GFSGMemberExtension extends DataExtension {
 
-  private static $db = array(
-    'TxnId' => 'Varchar(60)',
-	'MembershipExpiry' => 'Date',
-	'WithJournal' => 'Boolean'
-  );
-  
+	private static $db = array(
+		'TxnId' => 'Varchar(60)',
+		'MembershipExpiry' => 'Date',
+		'WithJournal' => 'Boolean'
+	);
+
   	private static $has_one = array(
 		'Membership' => 'Membership'
+	);
+	
+	private static $has_many = array(
+		'Invoice' => 'Invoice'
 	);
 
 

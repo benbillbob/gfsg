@@ -1,0 +1,123 @@
+/**
+  * IMPORTANT NOTE:
+  * The default e-commerce css only includes the basics and it is recommended that you theme these files.
+  * Also make sure you have the site's general layout and typography styled before you do this.
+  **/
+
+.hideOnZeroItems {}
+.hideForNow{display: none;}
+
+.show{display: block;}
+.hide{display: none!important;}
+
+
+
+
+/*
+even when theme-ing ecommerce, these should not be themed
+*/
+
+
+.ajaxQuantityField {text-align: center;}
+.ecomquantityfield {position: relative;}
+.ecomquantityfield img{margin: 0!important; padding: 0!important; }
+.ecomquantityfield a{position: absolute; display: none; top: 0px}
+.ecomquantityfield:hover a{display: block;}
+.ecomquantityfield a.removeOneLink {left: 0px; }
+.ecomquantityfield a.addOneLink {right: 0px; }
+
+
+.removeOneLink {float: left; padding-right: 5px;}
+
+.itemdetails span {width: 100px;}
+
+ul.productActions {margin: 0px; padding: 0px;}
+ul.productActions li {display: block; margin: 10px; list-style: none; padding: 0px; margin: 10px 0; line-height: 0.8;}
+ul.productActions li a, .goToCart a, a.selectVariation, #ActionLinks a {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	text-decoration: none!important;
+	padding-right: 20px;
+	display: inline-block;
+	padding: 7px;
+}
+
+.notInCart .addLink {display: block;}
+.notInCart .removeLink {display: none!important;}
+.notInCart .goToCheckoutLink {display: none!important;}
+
+.inCart .addLink {display: none!important;}
+.inCart .removeLink {display: block!important;}
+.inCart .goToCheckoutLink {display: block!important;}
+.inCart .ajaxBuyableRemove .removeLink {color: transparent;}
+
+#Sidebar .goToCart a {
+	font-size: 11px;
+}
+
+ul.productActions li a:hover, .goToCart a:hover {
+	color: #FF336D;
+	-moz-box-shadow:
+		0px 1px 3px rgba(000,000,000,0.5),
+		inset 0px 0px 1px rgba(255,255,255,0.7);
+	-webkit-box-shadow:
+		0px 1px 3px rgba(000,000,000,0.5),
+		inset 0px 0px 1px rgba(255,255,255,0.7);
+	border: 1px solid #808383;
+
+}
+#ActionLinks  {padding: 0; margin: 0;}
+#ActionLinks li {float: left; width: 48%; list-style: none;}
+#ActionLinks li a{width: 80%;}
+
+.summary {font-weight: bold;}
+
+.ecomquantityfield {white-space: nowrap;}
+
+.tableSubTitle li {list-style: none; font-size: 0.8em!important;}
+
+.cartMessage span {background-color: transparent!important}
+
+.loading { background-image: url(/ecommerce/images/loading.gif)!important; background-repeat: no-repeat!important; background-position: 95% 0!important; position: relative; z-index: 999;  min-height: 30px!important; min-width: 30px!important; overflow: visible;}
+.loading * {visibility: hidden;}
+
+#InformationTable {width: 100%!important;}
+
+
+#Nav .itemsInClass {height: 0; line-height: 1; vertical-align: baseline; _vertical-align: bottom; position: relative; bottom: 1ex; font-size: 0.67em}
+
+
+ol.steps {
+	padding: 10px; margin: 10px 0;
+	background-color: #D3D4B6;
+	/* gradient */
+	background-position:0px center;
+	background-repeat:no-repeat;
+	border-top:       10px solid #808383;
+-moz-border-radius-topleft: 5px; border-top-left-radius: 5px;
+}
+ol.steps li {background-image: none; padding: 0px; margin: 0; width: auto; padding-right: 20px; font-size: 10px; display: inline-block; }
+ol.steps li.current {color: #FF336D;}
+
+#BodyOrderConfirmationPage #OrderPrintAndMailOuter,
+#BodyOrderConfirmationPage #PaymentForm,
+#BodyOrderConfirmationPage #CancelForm,
+#BodyOrderConfirmationPage #CartActionsAndMessages {
+	margin-top: 3em;
+}
+
+td .ajaxRemoveFromCart img {
+	border: none;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+.productList .inCart.productActions .ajaxBuyableRemove, .ajaxRemoveFromCart img {
+	filter: url(/ecommerce/css/filters.svg#grayscale); /* Firefox 3.5+ */
+	filter: gray; /* IE6-9 */
+	-webkit-filter: grayscale(1); /* Google Chrome & Safari 6+ */
+}
+.inCart.productActions .ajaxBuyableRemove:hover, .ajaxRemoveFromCart:hover  img {
+	filter: none;
+	-webkit-filter: grayscale(0);
+}

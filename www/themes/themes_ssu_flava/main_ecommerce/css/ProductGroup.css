@@ -1,0 +1,282 @@
+/**
+  * IMPORTANT NOTE:
+  * The default e-commerce css only includes the basics and it is recommended that you theme these files.
+  * Also make sure you have the site's general layout and typography styled before you do this.
+  **/
+
+
+
+#ProductGroup {
+}
+
+.filterSortSearchHeaders li {
+	list-style: none;
+	display: inline;
+	overflow: hidden;
+}
+
+.filterSortSearchHeaders li:before {
+	content: " | ";
+}
+
+.filterSortSearchHeaders li:first-child:before {
+	content:"";
+}
+
+.category {
+	overflow-x: hidden;
+}
+
+.filterSortDisplayAndSearch .current {
+	text-decoration:none;
+	font-weight:bold;
+}
+.filterSortDisplayAndSearch a.open {
+	color: #FF336D;
+}
+.filterSortDisplayAndSearch ul.open, .filterSortDisplayAndSearch div.open  {
+	background-color: #D3D4B6;
+	padding: 20px;
+  -webkit-border-bottom-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  -moz-border-radius-bottomright: 5px;
+  margin: 1%;
+}
+
+#MenuChildGroupsList ul {overflow: auto;}
+
+.filterSortDisplayAndSearch form {margin: 0; padding: 0;}
+
+#MenuChildGroupsList li {clear: both; list-style: none;}
+#FilterForList {
+	overflow: hidden;
+}
+#FilterForList li {
+ display: block;
+ width: 32%;
+ float: left;
+}
+.mobileBrowsing #FilterForList li {
+ display: block;
+ width: 49%;
+ float: left;
+}
+#FilterForList li:nth-child(3+1) {
+clear: left;
+}
+.mobileBrowsing  #FilterForList li:nth-child(3+1) {
+clear: none;
+}
+.mobileBrowsing #FilterForList li:nth-child(2+1) {
+clear: left;
+}
+#FilterForList li a.current {
+	color: #ff336d;
+	text-decoration: none!important;
+}
+
+
+.productList{
+	padding:0;
+	margin:0;
+}
+
+/* 3) Product Settings */
+
+
+.resultsBar .resultsShowing,
+.resultsBar .resultsShowing {
+	float: right;
+	width: 50%;
+	text-align: right;
+}
+
+/* Image placeholder */
+.productItem a.noimage{
+	padding:20px;
+	height:60px;
+	text-align:center;
+	background:#eeeeee;
+	color:#d3d3d3;
+	display:block;
+	text-decoration:none;
+	font-size:20px;
+}
+
+td.price {text-align: right;}
+
+
+.productList .productItem {
+	list-style:none;
+}
+.productList .productActions{
+	padding:0;
+	margin:0;
+	-moz-column-count: 1;
+	-moz-column-gap: 0;
+	-webkit-column-count: 1;
+	-webkit-column-gap: 0;
+	column-count: 1;
+	column-gap: 0;
+}
+.productList .productActions li {
+	list-style: none;
+	padding:0;
+	margin:0;
+	max-width: 210px;
+	text-align: center;
+}
+.productList .inCart.productActions .ajaxBuyableRemove {
+	display: block;
+	width: 13px!important;
+	height: 13px!important;
+	text-indent: -9999px;
+	background-image: url(/ecommerce/images/remove.gif);
+	border: none!important;
+	padding: 0!important;
+}
+
+.productList img, .productList  h3 {
+	padding: 0; margin:0
+}
+#Products {clear: both;}
+
+#Products .displayStyleShort {margin-left: 0px; padding-left: 0px;  margin-bottom: 40px; margin-top:40px}
+#Products .displayStyleShort>li {border-bottom: 1px dotted #808383; clear: both; padding: 1.3em 0 1.3em 0; }
+#Products .displayStyleShort>li.last {border-bottom: 1px dotted transparent; }
+#Products .displayStyleShort li h3 {display: block; width: auto; line-height: 1;}
+#Products .displayStyleShort li p {margin: 0px; line-height: 1; font-weight: normal; float: right;}
+#Products .displayStyleShort ul.productActions {clear: both; text-align: right; padding: 10px 0 10px 0;}
+#Products .displayStyleShort ul.productActions li{display: inline;}
+#Products .displayStyleShort ul.productActions a {margin-top: 0px; margin-bottom: 10px; }
+
+#Products .displayStyleMoreDetail {margin-left: 0px; padding-left: 0px; }
+#Products .displayStyleMoreDetail>li {width: 100%; padding: 8px 0 28px 0px;  clear: both; position:relative;}
+#Products .displayStyleMoreDetail>li.last  {}
+#Products .displayStyleMoreDetail li h3 {text-align: left; padding: 0; margin-bottom: 0.5em;}
+#Products .displayStyleMoreDetail li h3 a{display: inline;padding: 0;}
+#Products .displayStyleMoreDetail li h3 a:hover{color: #FF336D!important; background-color: transparent; border-bottom: 0px;}
+#Products .displayStyleMoreDetail li img {margin-right: 20px; float: left; margin-bottom: 6em;}
+#Products .displayStyleMoreDetail li a {}
+#Products .displayStyleMoreDetail li p.moreInformation {padding: 0; margin: 0; padding-bottom: 10px;}
+#Products .displayStyleMoreDetail .priceDisplay {position: absolute; top:0;right: 0; display: inline-block; padding-top: 0.37em}
+#Products .displayStyleMoreDetail ul.productActions  {position: absolute; bottom: 28px; right: 0px;}
+#Products .displayStyleMoreDetail ul.productActions li {text-align: right}
+#Products .displayStyleMoreDetail ul.productActions a { display: inline-block; }
+
+ul.displayStyledefault {padding: 10px; margin: 0px;}
+.displayStyledefault .productItem {
+	list-style:none;
+	float: left;
+	width: 28%;
+	overflow: hidden;
+	margin: 2%;
+	padding: 1%;
+	min-height: 320px;
+	position: relative;
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+}
+/** see media queries below **/
+
+ .productItem img {
+	display: block;
+	float: none;
+	margin-left: auto!important;
+	margin-right: auto!important;
+}
+.displayStyledefault .productActions, .productActionsHolder .message {
+	margin: 0;
+	padding: 0;
+}
+.productActionsHolder .message {padding: 10px;  margin-top: 5px; background: transparent; color: #FFCC33;}
+.productActionsHolder .message p {line-height: 1; font-size: 0.77em!important;}
+
+.displayStyledefault .productItem h3 a {text-decoration: none; font-weight: bold; display: block; text-align: center; margin-top: 0.5em; }
+.displayStyledefault .productItem h3 a:hover {border-bottom: 1px solid transparent;}
+.displayStyledefault .priceDisplay  {text-align: center; font-size: 0.8em; margin: 0; padding: 0px}
+.displayStyledefault .productActions  a {display: block; width: 101px; margin-right: auto; margin-left: auto;}
+
+.sortAndListLinks a.current {color: #ff336d; text-decoration: none!important;}
+
+.menuChildGroups ul, #Products ul {
+	-moz-column-count: 1;
+	-moz-column-gap: 0;
+	-webkit-column-count: 1;
+	-webkit-column-gap: 0;
+	column-count: 1;
+	column-gap: 0;
+}
+
+
+.fullList li {list-style: none; clear: both; list-style-image: none;}
+.fullListRow {border-bottom: 1px dotted #ccc; height: 1.2em;}
+.fullListRow a, .fullListRow span.price {width: auto; display: block;  background-color: #fff; padding-bottom: 7px;}
+.fullListRow a {float: left; padding-right: 1em;}
+.fullListRow span.price {float: right; padding-left: 1em;}
+
+
+
+
+
+/* SMALL LIST OF PRODUCTS */
+@media all and (min-width: 561px) {
+	ul li.productItem:nth-child(3n+1) {margin-left: 0px!important;}
+	ul li.productItem:nth-child(3n) {margin-right: 0px!important;}
+}
+
+@media all and (max-width: 560px) and (min-width: 380px){
+	.displayStyledefault .productItem {
+		list-style:none;
+		float: left;
+		width: 44%;
+		overflow: hidden;
+		margin: 1%;
+		padding: 0.5%;
+		min-height: 320px;
+		position: relative;
+		padding-bottom: 0px;
+		margin-bottom: 0px;
+	}
+
+
+}
+
+@media all and (max-width: 380px) {
+	.displayStyledefault .productItem {
+		list-style:none;
+		float: none;
+		width: 97%;
+		overflow: hidden;
+		margin: 1%;
+		padding: 0.5%;
+		min-height: 320px;
+		position: relative;
+		padding-bottom: 0px;
+		margin-bottom: 0px;
+	}
+	ul li.productItem:nth-child(2n+1) {margin-left: 0px!important;}
+	ul li.productItem:nth-child(2n) {margin-right: 0px!important;}
+.productList .productActions li {max-width: 100%;}
+}
+
+
+p.noProductsFound {clear: both; margin-top: 100px;}
+
+#ProductGroup.loading {
+  display: block;
+  /* IE 8 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  /* IE 5-7 */
+  filter: alpha(opacity=50);
+  /* Netscape */
+  -moz-opacity: 0.5;
+  /* Safari 1.x */
+  -khtml-opacity: 0.5;
+  /* Good browsers */
+  opacity: 0.5;
+}
+
+#ProductGroup.loading * {
+	visibility: visible;
+}

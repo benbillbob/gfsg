@@ -1,0 +1,11 @@
+Membership:
+ MembershipItem1:
+  ItemName: MembershipItem1
+  ItemNumber: MembershipItemNum1
+  Amount: 1.00
+  MembershipMonths: 12
+ MembershipItem2:
+  ItemName: MembershipItem2
+  ItemNumber: MembershipItemNum2
+  Amount: 2.00
+  MembershipMonths: 24

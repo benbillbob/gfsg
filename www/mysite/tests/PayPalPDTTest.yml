@@ -1,0 +1,24 @@
+Item:
+ Item1:
+  ItemName: ItemName1
+  ItemNumber: ItemNumber1
+  Amount: 0.01
+  DescriptionContent: HTMLTextInvoice
+Invoice:
+ Invoice1:
+  TxnId: TxnId1
+  PayPalTx: PayPalTxSuccess1
+  Status: success
+ Invoice2:
+  TxnId: TxnId2
+  PayPalTx: PayPalTxFailed2
+  Status: failed
+InvoiceLine:
+ InvoiceLine1:
+  Amount: 0.01
+  Item: =>Item.Item1
+  Invoice: =>Invoice.Invoice1
+ InvoiceLine2:
+  Amount: 0.02
+  Item: =>Item.Item1
+  Invoice: =>Invoice.Invoice2

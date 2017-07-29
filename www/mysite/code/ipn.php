@@ -87,8 +87,10 @@ class Ipn {
         curl_setopt($ch, CURLOPT_TIMEOUT, $this->timeout);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, true);
-        
-        curl_setopt($ch, CURLOPT_SSLVERSION, 4);
+		
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); 
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false); 
+		curl_setopt($ch, CURLOPT_SSLVERSION, 6); //6 is for TLSV1.2
         
         $this->response = curl_exec($ch);
         $this->response_status = strval(curl_getinfo($ch, CURLINFO_HTTP_CODE));
@@ -150,8 +152,17 @@ class Ipn {
     }
     
     private function getPaypalHost() {
-        if ($this->use_sandbox) return Ipn::SANDBOX_HOST;
-        else return Ipn::PAYPAL_HOST;
+		Debug::show($this->use_sandbox);
+		if ($this->use_sandbox)
+		{
+			Debug::show(Ipn::SANDBOX_HOST);
+			return Ipn::SANDBOX_HOST;
+		}	
+        else 
+		{
+			Debug::show(Ipn::PAYPAL_HOST);
+			return Ipn::PAYPAL_HOST;
+		}
     }
     
     /**
@@ -237,8 +248,8 @@ class Ipn {
     
      public function processTx($tx, $authToken, $sandbox) 
 	{
-        $use_sandbox = $sandbox;
-		
+		$this->use_sandbox = $sandbox;
+
 		$encoded_data = 'cmd=_notify-synch';
 		$encoded_data .= '&tx='.$tx;
 		$encoded_data .= '&at='.$authToken;
@@ -255,7 +266,7 @@ class Ipn {
 	
     public function processIpn($sandbox) 
 	{
-        $use_sandbox = $sandbox;
+        $this->use_sandbox = $sandbox;
 		
 		$encoded_data = 'cmd=_notify-validate';
 		if (!empty($_POST)) 

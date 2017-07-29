@@ -1,13 +1,7 @@
 <?php
-class Membership extends DataObject {
+class Membership extends Item {
 	private static $db = array (
-		'ItemName' => 'Varchar',
-		'ItemNumber' => 'Varchar',
-		'Amount' => 'Currency',
-		'ItemNumberWithJournal' => 'Varchar',
-		'AmountWithJournal' => 'Currency',
-		'MembershipMonths' => 'Varchar',
-		'DescriptionContent' => 'HTMLText'
+		'MembershipMonths' => 'Varchar'
 	);
 	
 	private static $has_one = array(
@@ -20,19 +14,14 @@ class Membership extends DataObject {
 	);
 	
 	public function getCMSFields() {
-		$fields = FieldList::create(
-			TextField::create('ItemName'),
-			TextField::create('ItemNumber'),
-			CurrencyField::create('Amount'),
-			TextField::create('ItemNumberWithJournal'),
-			CurrencyField::create('AmountWithJournal'),
-			TextField::create('MembershipMonths'),
-			$groupField = DropdownField::create('GroupID', 'Please choose an Membership', Group::get()->filter(array('IsPaidMembership' => true))->map('ID', 'Title', 'Please Select')),
-		    HTMLEditorField::create('DescriptionContent')
-		);
-		
+		$fields = parent::getCMSFields();
+		$fields->push(TextField::create('MembershipMonths'));
+
+		$groupField = DropdownField::create('GroupID', 'Please choose an Membership', Group::get()->filter(array('IsPaidMembership' => true))->map('ID', 'Title', 'Please Select'));
 		$groupField->setHasEmptyDefault(true);
 
+		$fields->push($groupField);
+		
 		return $fields;
 	}
 	

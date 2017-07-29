@@ -6,8 +6,8 @@ class MiniCartSiteConfig extends DataExtension
     private static $db = array(
         'MiniCartEmail' => 'Text',
         'MiniCartCurrency' => 'Text',
-        'MiniCartTestMode' => 'Boolean',
-		'MiniCartAuthToken' => 'Text'
+		'MiniCartPDTAuthCode' => 'Text',
+        'MiniCartTestMode' => 'Boolean'
     );
 
     private static $has_one = array(
@@ -20,6 +20,10 @@ class MiniCartSiteConfig extends DataExtension
         $fields->addFieldToTab(
             'Root.Minicart',
             new TextField('MiniCartEmail', _t('MiniCartSettings.PAYPAL_EMAIL', 'PayPal Email'))
+        );
+        $fields->addFieldToTab(
+            'Root.Minicart',
+            new TextField('MiniCartPDTAuthCode', 'MiniCartPDTAuthCode')
         );
         $fields->addFieldToTab(
             'Root.Minicart',
@@ -36,10 +40,6 @@ class MiniCartSiteConfig extends DataExtension
         $fields->addFieldToTab(
             'Root.Minicart',
             new CheckboxField('MiniCartTestMode', _t('MiniCartSettings.TEST_MODE', 'Use PayPal Sandbox'))
-        );
-        $fields->addFieldToTab(
-            'Root.Minicart',
-            new TextField('MiniCartAuthToken', 'AuthToken')
         );
     }
 

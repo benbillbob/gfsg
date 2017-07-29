@@ -1,0 +1,16 @@
+git clone git@github.com:sunnysideup/silverstripe-themes_ssu_flava_main.git
+git clone git@github.com:sunnysideup/silverstripe-themes_ssu_flava_main_cms.git
+git clone git@github.com:sunnysideup/silverstripe-themes_ssu_flava_main_ecommerce.git
+git clone git@github.com:sunnysideup/silverstripe-themes_ssu_flava_main_ecommerce_product_variation.git
+git clone git@github.com:sunnysideup/silverstripe-themes_ssu_flava_main_webportfolio.git
+git clone git@github.com:sunnysideup/silverstripe-themes_ssu_flava_simple.git
+git clone git@github.com:sunnysideup/silverstripe-themes_ssu_flava_simple_ecommerce.git
+
+
+cp ../main/* silverstripe-themes_ssu_flava_main -r
+cp ../main_cms/* silverstripe-themes_ssu_flava_main_cms -r
+cp ../main_ecommerce/* silverstripe-themes_ssu_flava_main_ecommerce -r
+cp ../main_ecommerce_product_variation/* silverstripe-themes_ssu_flava_main_ecommerce_product_variation -r
+cp ../main_webportfolio/* silverstripe-themes_ssu_flava_main_webportfolio -r
+cp ../simple/* silverstripe-themes_ssu_flava_simple -r
+cp ../simple_ecommerce/* silverstripe-themes_ssu_flava_simple_ecommerce -r

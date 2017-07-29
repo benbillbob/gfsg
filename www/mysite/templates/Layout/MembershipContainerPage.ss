@@ -14,36 +14,37 @@
 				<td>
 					<form action="$FormAction" method="post"><!-- SiteConfig -->
 						<fieldset>
-							<input type="hidden" name="cmd" value="_cart" />
-							<input type="hidden" name="add" value="1" />
+							<input type="hidden" name="cmd" value="_xclick">
 							<input type="hidden" name="business" value="$Business()" /><!-- SiteConfig -->
 							<input type="hidden" name="item_name" value="$ItemName" /><!-- Shortcode -->
 							<input type="hidden" name="item_number" value="$ItemNumber"><!-- Shortcode -->
 							<input type="hidden" name="amount" value="$Amount" /><!-- Shortcode -->
-							<input type="hidden" name="custom" value="$Custom" /><!-- Shortcode -->
+							<input id="Custom" type="hidden" name="custom" /><!-- Runtime -->
 							<input type="hidden" name="currency_code" value="$CurrencyCode()" /><!-- SiteConfig -->
 							<input type="hidden" name="return" value="$ReturnUrl()" /><!-- SiteConfig -->
 							<input type="hidden" name="cancel_return" value="$CancelUrl()" /><!-- SiteConfig -->
-							<input type="submit" name="submit" value="Buy Now" class="button" /><!-- Shortcode -->
+							<input type="submit" name="submitButton" value="Buy Now" class="button" /><!-- Shortcode -->
 						</fieldset>
 						<h4>$Amount.Nice</h4>
 					</form>
+					
+					<% loop $ChildItems %>
 					<form action="$FormAction" method="post"><!-- SiteConfig -->
 						<fieldset>
-							<input type="hidden" name="cmd" value="_cart" />
-							<input type="hidden" name="add" value="1" />
+							<input type="hidden" name="cmd" value="_xclick">
 							<input type="hidden" name="business" value="$Business()" /><!-- SiteConfig -->
 							<input type="hidden" name="item_name" value="$ItemName" /><!-- Shortcode -->
-							<input type="hidden" name="item_number" value="$ItemNumberWithJournal"><!-- Shortcode -->
-							<input type="hidden" name="amount" value="$AmountWithJournal" /><!-- Shortcode -->
-							<input type="hidden" name="custom" value="$Custom" /><!-- Shortcode -->
+							<input type="hidden" name="item_number" value="$ItemNumber"><!-- Shortcode -->
+							<input type="hidden" name="amount" value="$Amount" /><!-- Shortcode -->
+							<input id="Custom" type="hidden" name="custom" /><!-- Runtime -->
 							<input type="hidden" name="currency_code" value="$CurrencyCode()" /><!-- SiteConfig -->
 							<input type="hidden" name="return" value="$ReturnUrl()" /><!-- SiteConfig -->
 							<input type="hidden" name="cancel_return" value="$CancelUrl()" /><!-- SiteConfig -->
-							<input type="submit" name="submit" value="Buy Now with Journal" class="button" /><!-- Shortcode -->
+							<input type="submit" name="submitButton" value="Buy Now with Journal" class="button" /><!-- Shortcode -->
 						</fieldset>
-						<h4>$AmountWithJournal.Nice</h4>
+						<h4>$Amount.Nice</h4>
 					</form>
+					<% end_loop %>
 				</td>
 			</tr>
 		<% end_loop %>
