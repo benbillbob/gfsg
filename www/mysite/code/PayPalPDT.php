@@ -9,14 +9,13 @@ class PayPalPDT {
 
 	public function getError()
 	{
-		return $error;
+		return $this->error;
 	}
 	
-	public function getInvoice($ipnIn, $txIn)
+	public function getInvoice(Ipn $ipnIn, $txIn)
 	{
 		$this->tx = $txIn;
 		$this->ipn = $ipnIn;
-		
 		if (!isset($this->tx))
 		{
 			Debug::message("No TX Provided");
@@ -44,7 +43,7 @@ class PayPalPDT {
 			$invoice->write();
 		}
 		
-		$response = $this->getDetailsFromPayPal($this->tx);
+		$response = $this->getDetailsFromPayPal();
 		
 		if (!$this->validateResponse($response))
 		{

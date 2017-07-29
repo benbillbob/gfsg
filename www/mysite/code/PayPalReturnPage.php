@@ -50,17 +50,13 @@ class PayPalReturnPage_Controller extends Page_Controller
 		$ipn = new Ipn();
 		$paypalPDT = new PayPalPDT();
 
-		$invoice;
-		
-		try
-		{
-			$invoice = $paypalPDT->getDetails($ipn, $tx);
-		}
-		catch (PayPalPDTException $ex)
-		{
-			return $ex->getMessage();
-		}
-		
+		$invoice = $paypalPDT->getInvoice($ipn, $tx);
+
+		if (!$invoice)
+        {
+            return $paypalPDT->getError();
+        }
+
 		if ($member->ID != $invoice->MemberID)
 		{
 			$this->FailureContent = "Incorrect member processing. Please contact support.";
