@@ -1,11 +1,41 @@
+Group:
+ TestGroup:
+  Title: TestGroup
 Membership:
  MembershipItem1:
   ItemName: MembershipItem1
   ItemNumber: MembershipItemNum1
   Amount: 1.00
   MembershipMonths: 12
+  Group: =>Group.TestGroup
  MembershipItem2:
   ItemName: MembershipItem2
   ItemNumber: MembershipItemNum2
   Amount: 2.00
   MembershipMonths: 24
+Item:
+ Item1:
+  ItemName: ItemName1
+  ItemNumber: ItemNumber1
+  Amount: 0.01
+  Quantity: 1
+Member:
+ Member1:
+  MembershipExpiry: 2017-07-28
+Invoice:
+ MembershipInvoice:
+  TxnId: MembershipInvoice
+  Status: processing
+  Member: =>Member.Member1
+ NonMembershipInvoice:
+  TxnId: NonMembershipInvoice
+  Status: processing
+InvoiceLine:
+ MembershipInvoiceLine:
+  Amount: 0.01
+  Invoice: =>Invoice.MembershipInvoice
+  Item: =>Membership.MembershipItem1
+ NonMembershipInvoiceLine:
+  Amount: 0.01
+  Invoice: =>Invoice.NonMembershipInvoice
+  Item: =>Item.Item1

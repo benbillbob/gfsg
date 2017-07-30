@@ -1,5 +1,12 @@
 <?php
 
+class PayPalItem {
+	public $itemName;
+	public $itemNumber;
+	public $itemQuantity;
+	public $itemAmount;
+}
+
 class PayPalPDT {
 	
 	private $tx;
@@ -12,7 +19,7 @@ class PayPalPDT {
 		return $this->error;
 	}
 	
-	public function getInvoice(Ipn $ipnIn, $txIn)
+	public function getInvoice($ipnIn, $txIn)
 	{
 		$this->tx = $txIn;
 		$this->ipn = $ipnIn;
@@ -35,12 +42,18 @@ class PayPalPDT {
 			}
 			else if ($invoice->Status == Invoice::STATUS_PROCESSING)
 			{
+				Debug::Message('Already processing');
 				$this->error = 'Already processing';
 				return null;
 			}
 
+			Debug::Message('Found Invoice for PayPalTX - ' . $this->tx);
 			$invoice->Status = Invoice::STATUS_PROCESSING;
 			$invoice->write();
+		}
+		else
+		{
+			Debug::Message('invoice not found for paypal tx - '. $this->tx);
 		}
 		
 		$response = $this->getDetailsFromPayPal();
@@ -78,22 +91,21 @@ class PayPalPDT {
 				$this->error = 'No invoice found. Please contact support.';
 				return null;
 			}
-		}
-		
-		if ($invoice->Status == Invoice::STATUS_COMPLETE || $invoice->Status == Invoice::STATUS_FAILED)
-		{
-			Debug::Message('invoice status - '. $invoice->Status);
-			return $invoice;
-		}
-		else if ($invoice->Status == Invoice::STATUS_PROCESSING)
-		{
-			$this->error = 'Already processing';
-			return null;
-		}
+			if ($invoice->Status == Invoice::STATUS_COMPLETE || $invoice->Status == Invoice::STATUS_FAILED)
+			{
+				Debug::Message('invoice status - '. $invoice->Status);
+				return $invoice;
+			}
+			else if ($invoice->Status == Invoice::STATUS_PROCESSING)
+			{
+				$this->error = 'Already processing';
+				return null;
+			}
 
-		// TODO //$invoice->Status = Invoice::STATUS_PROCESSING;
-		$invoice->TxnId = $txnId;
-		$invoice->write();		
+			$invoice->Status = Invoice::STATUS_PROCESSING;
+			$invoice->TxnId = $txnId;
+			$invoice->write();		
+		}
 		
 		$items = $this->getItemsFromPayPal($values);
 		Debug::Show($items);
@@ -108,14 +120,16 @@ class PayPalPDT {
 		
 		$invoiceLines->each(function($invoiceLine) use ($items)
 		{
-			$item = $this->objArraySearch($items, 'itemNumber', $invoiceLine->Item()->ID);
+			$item = $this->objArraySearch($items, 'itemNumber', $invoiceLine->Item()->ItemNumber);
 			if (!$item)
 			{
 				$this->error = 'Txn Details do not match items. Please contact support.';
 				return null;
 			}
+			
+			// TODO - Check line details here
 		});
-
+		
 		return $invoice;
 	}
 	

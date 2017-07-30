@@ -1,0 +1,6 @@
+Member:
+ Member1:
+  MembershipExpiry: 2017-07-28
+Invoice:
+ Invoice1:
+  Member: =>Member.Member1

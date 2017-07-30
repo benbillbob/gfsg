@@ -1,0 +1,4 @@
+Page:
+   TestPage:
+      Title: TestPage
+      URLSegment: 'testpage'

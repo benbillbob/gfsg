@@ -4,33 +4,72 @@ class PayPalPDTTest extends SapphireTest {
 	
 	protected static $fixture_file = 'mysite/tests/PayPalPDTTest.yml';
 
+	public function testFixtureLoaded()	{
+		$invoices = Invoice::get();
+		$invoices->each(function ($invoice){Debug::Show($invoice->PayPalTx);});
+		$this->assertEquals($invoices->count(), 4);
+	}
+	
 	public function testMissingTx() {
 		$paypalPdt = new PayPalPDT();
+		$ipn = $this->getIpnMock(false);
 		$result = $paypalPdt->getInvoice(null, null);
 		$this->assertNull($result);
+		$this->assertEquals($paypalPdt->getError(), 'No transaction id provided. Please contact support.');
+	}
+
+	public function testProcessingInvoice() {
+		$paypalPdt = new PayPalPDT();
+		$ipn = $this->getIpnMock(false);
+		$result = $paypalPdt->getInvoice(null, 'PayPalTxProcessing');
+		$this->assertNull($result);
+		$this->assertEquals($paypalPdt->getError(), 'Already processing');
 	}
 
 	public function testPreviousSuccessfulInvoice() {
 		$paypalPdt = new PayPalPDT();
-		$result = $paypalPdt->getInvoice(null, 'PayPalTxSuccess1');
+		$ipn = $this->getIpnMock(false);
+		$result = $paypalPdt->getInvoice(null, 'PayPalTxSuccess');
 		$this->assertNotNull($result);
+		$this->assertEquals($result->Status, 'complete');
+		$error = $paypalPdt->getError();
+		$this->assertNull($error);
 	}
 
 	public function testPreviousFailedInvoice() {
 		$paypalPdt = new PayPalPDT();
-		$ipn = $this->getIpnMock();
-		$result = $paypalPdt->getInvoice(null, PayPalTxFail2);
-		$this->assertNull($result);
+		$ipn = $this->getIpnMock(false);
+		$result = $paypalPdt->getInvoice(null, 'PayPalTxFailed');
+		$this->assertNotNull($result);
+		$this->assertEquals($result->Status, 'failed');
 		$error = $paypalPdt->getError();
-		$this->assertNotNull($error);
+		$this->assertNull($error);
 	}
 
-	private function getIpnMock() {
+	public function testPendingSuccessInvoice() {
+		$paypalPdt = new PayPalPDT();
+		$ipn = $this->getIpnMock(true);
+		$result = $paypalPdt->getInvoice($ipn, 'PayPalTxPending');
+		$error = $paypalPdt->getError();
+		$this->assertNull($error);
+		$this->assertNotNull($result);
+		$this->assertEquals($result->Status, 'processing');
+	}
+
+	private function getIpnMock($setupResponse) {
         $ipn = $this->getMockBuilder(Ipn::class)->getMock();
 
-        $ipn->expects($this->once())
-			->method('processTx')
-			->will($this->returnValue(PayPalPDTTest::PAYPAL_RESPONSE));
+        if ($setupResponse)
+		{
+			$ipn->expects($this->any())
+				->method('processTx')
+				->will($this->returnValue(PayPalPDTTest::PAYPAL_RESPONSE));
+		}
+		else
+		{
+			$ipn->expects($this->never())
+				->method('processTx');
+		}
 			 
 		return $ipn;
 	}
@@ -67,10 +106,10 @@ shipping_discount=0.00
 insurance_amount=0.00
 receiver_id=STMNXPJQ5838C
 txn_type=web_accept
-item_name=p
+item_name=ItemName1
 discount=0.00
 mc_currency=AUD
-item_number=p
+item_number=ItemNumber1
 residence_country=AU
 shipping_method=Default
 handling_amount=0.00

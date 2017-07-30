@@ -3,6 +3,7 @@ class InvoiceLine extends DataObject {
 	private static $db = array (
 		'Logs' => 'Varchar',
 		'Amount' => 'Currency',
+		'Quantity' => 'Int'
 	);
 	
 	private static $has_one = array(
@@ -16,5 +17,40 @@ class InvoiceLine extends DataObject {
 		);
 		
 		return $fields;
+	}
+	
+	public function process($member)
+	{
+		$item = $this->Item();
+		if (!($item instanceof Membership))
+		{
+			return 'Not a membership';
+		}
+		
+		if (!$member)
+		{
+			return 'Not a member';
+		}
+		
+		$membershipExpiry = $member->MembershipExpiry;
+		$dt = new DateTime("NOW");
+		if ($membershipExpiry < $dt)
+		{
+			$membershipExpiry = $dt->format("Y-m-d");
+		}
+		
+		$membershipExpiry = DateHelper::addmonths(new DateTime($membershipExpiry), $item->MembershipMonths);
+		$this->updateMember($member, $item, $membershipExpiry);
+		
+		return null;
+	}
+	
+	private function updateMember($member, $membership, $membershipExpiry)
+	{
+		$member->Groups()->add($membership->Group());
+		
+		$member->Membership = $membership;
+		$member->MembershipExpiry = $membershipExpiry->format("Y-m-d");
+		$member->write();
 	}
 }

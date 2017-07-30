@@ -26,7 +26,29 @@ class Invoice extends DataObject {
 	
 	public function processPurchase()
 	{
-		return 'woot';
+		$error = null;
+		
+		$invoiceLines = $this->InvoiceLines();
+		foreach($invoiceLines as $line) {
+			$error = $line->process($this->Member());
+			if ($error)
+			{
+				break;
+			}
+		}
+		
+		if ($error)
+		{
+			$this->Status = Invoice::STATUS_PENDING;
+		}
+		else
+		{
+			$this->Status = Invoice::STATUS_COMPLETE;
+		}
+		
+		$this->write();
+		
+		return $error;
 	}
 	
 	const STATUS_PROCESSING = 'processing';

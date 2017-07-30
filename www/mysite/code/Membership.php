@@ -1,7 +1,8 @@
 <?php
 class Membership extends Item {
 	private static $db = array (
-		'MembershipMonths' => 'Varchar'
+		'MembershipMonths' => 'Varchar',
+		'WithJournal' => 'Boolean'
 	);
 	
 	private static $has_one = array(
@@ -16,6 +17,7 @@ class Membership extends Item {
 	public function getCMSFields() {
 		$fields = parent::getCMSFields();
 		$fields->push(TextField::create('MembershipMonths'));
+		$fields->push(CheckboxField::create('WithJournal'));
 
 		$groupField = DropdownField::create('GroupID', 'Please choose an Membership', Group::get()->filter(array('IsPaidMembership' => true))->map('ID', 'Title', 'Please Select'));
 		$groupField->setHasEmptyDefault(true);
@@ -58,5 +60,17 @@ class Membership extends Item {
 	public function Custom()
 	{
 		return Member::currentUser()->ID;
+	}
+	
+	public function ButtonText()
+	{
+		if ($this->WithJournal)
+		{
+			return 'Buy Now with Journal';
+		}
+		else
+		{
+			return 'Buy Now';
+		}
 	}
 }

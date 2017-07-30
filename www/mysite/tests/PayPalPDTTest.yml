@@ -3,22 +3,23 @@ Item:
   ItemName: ItemName1
   ItemNumber: ItemNumber1
   Amount: 0.01
+  Quantity: 1
   DescriptionContent: HTMLTextInvoice
 Invoice:
- Invoice1:
-  TxnId: TxnId1
-  PayPalTx: PayPalTxSuccess1
-  Status: success
- Invoice2:
-  TxnId: TxnId2
-  PayPalTx: PayPalTxFailed2
+ SuccessInvoice:
+  PayPalTx: PayPalTxSuccess
+  Status: complete
+ FailInvoice:
+  PayPalTx: PayPalTxFailed
   Status: failed
+ ProcessingInvoice:
+  PayPalTx: PayPalTxProcessing
+  Status: processing
+ PendingInvoice:
+  PayPalTx: PayPalTxPending
+  Status: pending
 InvoiceLine:
- InvoiceLine1:
+ PendingInvoiceLine1:
   Amount: 0.01
+  Invoice: =>Invoice.PendingInvoice
   Item: =>Item.Item1
-  Invoice: =>Invoice.Invoice1
- InvoiceLine2:
-  Amount: 0.02
-  Item: =>Item.Item1
-  Invoice: =>Invoice.Invoice2
