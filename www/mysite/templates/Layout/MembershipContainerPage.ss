@@ -4,7 +4,7 @@
 		<h1>$Title</h1>
 		<div class="content">$Content</div>
 		<table>
-		<% loop $Memberships.Filter('ParentItemId', '0') %>
+		<% loop $Memberships.Filter('ParentItemId', '0').Sort('Sequence', ASC) %>
 			<tr>
 				<td>
 					<h2>$ItemName</h2>
@@ -30,7 +30,7 @@
 								</fieldset>
 							</form>
 						</td></tr>
-					<% loop $ChildItems %>
+					<% loop $ChildItems.Sort('Sequence', ASC) %>
 						<tr><td>
 							<h4>$MembershipMonths Months</h4>
 							<h4>$Amount.Nice</h4>

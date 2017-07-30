@@ -94,16 +94,20 @@ class PayPalPDT {
 			if ($invoice->Status == Invoice::STATUS_COMPLETE || $invoice->Status == Invoice::STATUS_FAILED)
 			{
 				Debug::Message('invoice status - '. $invoice->Status);
+				$invoice->PayPalTx = $this->tx;
+				$invoice->write();		
 				return $invoice;
 			}
 			else if ($invoice->Status == Invoice::STATUS_PROCESSING)
 			{
 				$this->error = 'Already processing';
+				$invoice->PayPalTx = $this->tx;
+				$invoice->write();		
 				return null;
 			}
 
 			$invoice->Status = Invoice::STATUS_PROCESSING;
-			$invoice->TxnId = $txnId;
+			$invoice->PayPalTx = $this->tx;
 			$invoice->write();		
 		}
 		

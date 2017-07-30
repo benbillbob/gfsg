@@ -4,6 +4,7 @@ class Item extends DataObject {
 		'ItemName' => 'Varchar',
 		'ItemNumber' => 'Varchar',
 		'Amount' => 'Currency',
+		'Sequence' => 'Int',
 		'DescriptionContent' => 'HTMLText'
 	);
 	
@@ -20,6 +21,7 @@ class Item extends DataObject {
 			TextField::create('ItemName'),
 			TextField::create('ItemNumber'),
 			CurrencyField::create('Amount'),
+			NumericField::create('Sequence'),
 			$parentField = DropdownField::create('ParentItemID', 'Please choose an parent item', Item::get()->filter(array('ParentItemID' => 0))->map('ID', 'ItemName', 'Please Select')),
 		    HTMLEditorField::create('DescriptionContent')
 		);
