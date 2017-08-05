@@ -24,7 +24,7 @@ class InvoiceLine extends DataObject {
 		$item = $this->Item();
 		if (!($item instanceof Membership))
 		{
-			return 'Not a membership';
+			return 'Not a Membership';
 		}
 		
 		if (!$member)
@@ -34,7 +34,7 @@ class InvoiceLine extends DataObject {
 		
 		$membershipExpiry = $member->MembershipExpiry;
 		$dt = new DateTime("NOW");
-		if ($membershipExpiry < $dt)
+		if (new DateTime($membershipExpiry) < $dt)
 		{
 			$membershipExpiry = $dt->format("Y-m-d");
 		}

@@ -5,9 +5,22 @@ Item:
   Amount: 0.01
   Quantity: 1
   DescriptionContent: HTMLTextInvoice
+ IpnItem:
+  ItemName: FM12
+  ItemNumber: FM12
+  Amount: 0.01
+  Quantity: 1
+  DescriptionContent: HTMLTextInvoice
 Invoice:
+ IpnInvoice:
+  TxnId: f6fec622-798c-11e7-9c71-067c67ad2d91
+  Status: pending
  SuccessInvoice:
+  TxnId: 45728f41-73fa-11e7-87d7-067c67ad2d91
   PayPalTx: PayPalTxSuccess
+  Status: complete
+ SuccessInvoiceNoPaypalTx:
+  TxnId: 51fe8160-b49b-4958-87b0-ecad730e89f5
   Status: complete
  FailInvoice:
   PayPalTx: PayPalTxFailed
@@ -19,7 +32,11 @@ Invoice:
   PayPalTx: PayPalTxPending
   Status: pending
 InvoiceLine:
- PendingInvoiceLine1:
+ SuccessInvoiceLine1:
   Amount: 0.01
-  Invoice: =>Invoice.PendingInvoice
+  Invoice: =>Invoice.SuccessInvoice
   Item: =>Item.Item1
+ IpnInvoiceLine1:
+  Amount: 0.01
+  Invoice: =>Invoice.IpnInvoice
+  Item: =>Item.IpnItem

@@ -27,7 +27,6 @@ class Invoice extends DataObject {
 	public function processPurchase()
 	{
 		$error = null;
-		
 		$invoiceLines = $this->InvoiceLines();
 		foreach($invoiceLines as $line) {
 			$error = $line->process($this->Member());
@@ -39,6 +38,7 @@ class Invoice extends DataObject {
 		
 		if ($error)
 		{
+			Debug::show($error);
 			$this->Status = Invoice::STATUS_PENDING;
 		}
 		else

@@ -11,9 +11,6 @@ $('form').each(function()
 		$.post(window.location.pathname + '/createInvoice', dataToBeSent, function(data) {
 			$('#Custom', $localForm).val(data);
 			$localForm[0].submit();   //Send client to the payment processor
-		}).fail(function(a, b, c, d, e) 
-		{
-			"".toString();
 		});
 	});
 });

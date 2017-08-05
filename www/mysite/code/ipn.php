@@ -276,14 +276,16 @@ class Ipn {
 		} 
 		else 
 		{
-			throw new Exception("No POST data found.");
+			Debug::message("No POST data found.");
+			return false;
 		}
 		
         if ($this->use_curl) $this->curlPost($encoded_data); 
         else $this->fsockPost($encoded_data);
         
         if (strpos($this->response_status, '200') === false) {
-            throw new Exception("Invalid response status: ".$this->response_status);
+            Debug::message("Invalid response status: ".$this->response_status);
+			return false;
         }
         
         if (strpos($this->response, "VERIFIED") !== false) {
@@ -291,7 +293,8 @@ class Ipn {
         } elseif (strpos($this->response, "INVALID") !== false) {
             return false;
         } else {
-			throw new Exception("Unexpected response from PayPal.");
+			Debug::message("Unexpected response from PayPal.");
+			return false;
         }
     }
     

@@ -49,12 +49,12 @@ class Membership extends Item {
 	
 	public function ReturnUrl()
 	{
-		return MiniCart::get_return_page();
+		return MiniCart::get_return_page(). '/pdtReturn';
 	}
 
 	public function CancelUrl()
 	{
-		return MiniCart::get_cancel_page();
+		return MiniCart::get_cancel_page(). '/pdtReturn';
 	}
 
 	public function Custom()

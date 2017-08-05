@@ -5,5 +5,7 @@ Your membership has been updated to
     <% loop $InvoiceLines.Limit(1) %>
         <li>$Item.ItemName</li>
     <% end_loop %>
+	
+	$Member.MembershipExpiry.nice
 </ul>
 

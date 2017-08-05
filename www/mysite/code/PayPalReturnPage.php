@@ -9,52 +9,86 @@ class PayPalReturnPage_Controller extends Page_Controller
 {
 	public function init() 
 	{
-		$this->Content = $this->getInvoice();
-
 		parent::init();
 	}
 	
-	private function getInvoice()
+	private static $allowed_actions = array(
+        'ipnReturn',
+		'pdtReturn'
+	);
+	
+	public function pdtReturn(SS_HTTPRequest $request)
+	{
+		$sandbox = (bool)SiteConfig::current_site_config()->MiniCartTestMode;
+		$invoice = $this->getInvoiceFromPDT($sandbox);
+
+		if (!is_a($invoice, Invoice::class))
+		{
+			return $invoice; // error message
+		}
+		
+		$invoice->processPurchase();
+		
+		$this->Content = $invoice->renderWith('ProcessedInvoice');
+		return $this->renderWith(Page::class);
+	}
+	
+	public function ipnReturn(SS_HTTPRequest $request) {
+		$sandbox = (bool)SiteConfig::current_site_config()->MiniCartTestMode;
+		$ipn = new Ipn();
+		
+		$valid = $ipn->processIPN($sandbox);
+
+		if (!$valid)
+		{
+			return 'Invalid IPN';
+		}
+
+        $response = $_POST;
+		
+		$paypalPDT = new PayPalPDT();
+
+		$invoice = $paypalPDT->getInvoiceFromValues($response);
+		if (!$invoice)
+		{
+			return $paypalPDT->getError();
+		}
+		
+		$invoice->processPurchase();
+	}
+
+	private function getInvoiceFromPDT($sandbox)
 	{
 		$member = Member::currentUser();
 		if (!$member)
 		{
-			Debug::message("Not logged in");
 			return "Not logged in.";
 		}
 		
 		$tx = $this->getRequest()->getVar('tx');
 		
-		$ipn = new Ipn();
 		$paypalPDT = new PayPalPDT();
 
-		$invoice = $paypalPDT->getInvoice($ipn, $tx);
-
+		$invoice = $paypalPDT->getInvoiceForTx($tx);
 		if (!$invoice)
-        {
-            return $paypalPDT->getError();
-        }
-		
-		if ($invoice->Status == Invoice::STATUS_FAILED)
 		{
-			Debug::message("Invoice Payment Failed");
-			return "Invoice Payment Failed";
+			$ipn = new Ipn();
+
+			$response = $paypalPDT->getResponseFromPayPal($ipn, $tx, $sandbox);
+			if (!$response)
+			{
+				return $paypalPDT->getError();
+			}
+			
+			$invoice = $paypalPDT->getInvoiceFromResponse($response, $tx);
+		}
+		
+		if (!$invoice)
+		{
+			return $paypalPDT->getError();
 		}
 
-		if ($member->ID != $invoice->MemberID)
-		{
-			Debug::message("Incorrect member processing. Please contact support.");
-			return "Incorrect member processing. Please contact support.";
-		}
-		
-		$error = $invoice->processPurchase();
-		
-		if ($error)
-		{
-			return $error;
-		}
-		
-		return $invoice->renderWith('ProcessedInvoice');
+		return $invoice;
 	}
 }
 

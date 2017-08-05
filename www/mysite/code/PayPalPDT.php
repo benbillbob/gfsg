@@ -19,44 +19,45 @@ class PayPalPDT {
 		return $this->error;
 	}
 	
-	public function getInvoice($ipnIn, $txIn)
+	public function getInvoiceForTx($tx)
 	{
-		$this->tx = $txIn;
-		$this->ipn = $ipnIn;
-		if (!isset($this->tx))
+		if (!isset($tx))
 		{
-			Debug::message("No TX Provided");
 			$this->error = "No transaction id provided. Please contact support.";
 			return null;
 		}
-
-		Debug::Show($this->tx);
 		
-		$invoice = Invoice::get()->filter('PayPalTx', $this->tx)->first();
-		if ($invoice)
+		$invoice = Invoice::get()->filter('PayPalTx', $tx)->first();
+		if (!$invoice)
 		{
-			if ($invoice->Status == Invoice::STATUS_COMPLETE || $invoice->Status == Invoice::STATUS_FAILED)
-			{
-				Debug::Message('invoice status - '. $invoice->Status);
-				return $invoice;
-			}
-			else if ($invoice->Status == Invoice::STATUS_PROCESSING)
-			{
-				Debug::Message('Already processing');
-				$this->error = 'Already processing';
-				return null;
-			}
-
-			Debug::Message('Found Invoice for PayPalTX - ' . $this->tx);
-			$invoice->Status = Invoice::STATUS_PROCESSING;
-			$invoice->write();
+			return null;
 		}
-		else
+
+		if ($invoice->Status == Invoice::STATUS_COMPLETE || $invoice->Status == Invoice::STATUS_FAILED)
 		{
-			Debug::Message('invoice not found for paypal tx - '. $this->tx);
+			return $invoice;
+		}
+		else if ($invoice->Status == Invoice::STATUS_PROCESSING)
+		{
+			$this->error = 'Already processing';
+			return null;
+		}
+
+		$invoice->Status = Invoice::STATUS_PROCESSING;
+		$invoice->write();
+		
+		return $invoice;
+	}
+
+	public function getResponseFromPayPal($ipn, $tx, $sandbox)
+	{
+		if (!isset($tx))
+		{
+			$this->error = "No transaction id provided. Please contact support.";
+			return null;
 		}
 		
-		$response = $this->getDetailsFromPayPal();
+		$response = $this->getDetailsFromPayPal($ipn, $tx, $sandbox);
 		
 		if (!$this->validateResponse($response))
 		{
@@ -64,8 +65,17 @@ class PayPalPDT {
 			return null;
 		}
 		
+		return $response;
+	}
+	
+	public function getInvoiceFromResponse($response, $tx)
+	{
 		$values = $this->getValues($response);
-
+		return $this->getInvoiceFromValues($values, $tx);
+	}
+	
+	public function getInvoiceFromValues($values, $tx)
+	{
 		if ($values['payment_status'] != "Completed")
 		{
 			$this->error = 'PayPal payment still processing, refresh page';
@@ -74,45 +84,46 @@ class PayPalPDT {
 
 		$txnId = $values['custom'];
 		
-		Debug::Message('TxnId - ' . $txnId);
 		if (!$txnId)
 		{
-			Debug::message('TxnId not found - ' . $txnId);
 			$this->error = 'No TxnId found. Please contact support.';
 			return null;
 		}
 		
+		$invoice = Invoice::get()->filter('TxnId', $txnId)->first();
 		if (!$invoice)
 		{
-			$invoice = Invoice::get()->filter('TxnId', $txnId)->first();
-			if (!$invoice)
-			{
-				Debug::message('Invoice not found - ' . $txnId);
-				$this->error = 'No invoice found. Please contact support.';
-				return null;
-			}
-			if ($invoice->Status == Invoice::STATUS_COMPLETE || $invoice->Status == Invoice::STATUS_FAILED)
-			{
-				Debug::Message('invoice status - '. $invoice->Status);
-				$invoice->PayPalTx = $this->tx;
-				$invoice->write();		
-				return $invoice;
-			}
-			else if ($invoice->Status == Invoice::STATUS_PROCESSING)
-			{
-				$this->error = 'Already processing';
-				$invoice->PayPalTx = $this->tx;
-				$invoice->write();		
-				return null;
-			}
-
-			$invoice->Status = Invoice::STATUS_PROCESSING;
-			$invoice->PayPalTx = $this->tx;
-			$invoice->write();		
+			$this->error = 'No invoice found. Please contact support.';
+			return null;
 		}
+		if ($invoice->Status == Invoice::STATUS_COMPLETE || $invoice->Status == Invoice::STATUS_FAILED)
+		{
+			if (isset($tx))
+			{
+				$invoice->PayPalTx = $tx;
+			}
+			$invoice->write();		
+			return $invoice;
+		}
+		else if ($invoice->Status == Invoice::STATUS_PROCESSING)
+		{
+			$this->error = 'Already processing';
+			if (isset($tx))
+			{
+				$invoice->PayPalTx = $tx;
+			}
+			$invoice->write();		
+			return null;
+		}
+
+		if (isset($tx))
+		{
+			$invoice->PayPalTx = $tx;
+		}
+		$invoice->Status = Invoice::STATUS_PROCESSING;
+		$invoice->write();		
 		
 		$items = $this->getItemsFromPayPal($values);
-		Debug::Show($items);
 		
 		$invoiceLines = $invoice->InvoiceLines();
 		
@@ -212,13 +223,10 @@ class PayPalPDT {
 		return false;
 	}
 	
-	private function getDetailsFromPayPal()
+	private function getDetailsFromPayPal($ipn, $tx, $sandbox)
 	{
-		$use_sandbox = (bool)SiteConfig::current_site_config()->MiniCartTestMode;
 		$authToken = SiteConfig::current_site_config()->MiniCartPDTAuthCode;
-		Debug::message('Comms with Paypal - ' . $authToken . ' - ' . $use_sandbox);
-		$response = $this->ipn->processTx($this->tx, $authToken, $use_sandbox);
-		Debug::Show($response);
+		$response = $ipn->processTx($tx, $authToken, $sandbox);
 		return $response;
 	}
 }
