@@ -14,7 +14,8 @@ class PayPalReturnPage_Controller extends Page_Controller
 	
 	private static $allowed_actions = array(
         'ipnReturn',
-		'pdtReturn'
+		'pdtReturn',
+		'pdtCancel'
 	);
 	
 	public function pdtReturn(SS_HTTPRequest $request)
@@ -30,6 +31,12 @@ class PayPalReturnPage_Controller extends Page_Controller
 		$invoice->processPurchase();
 		
 		$this->Content = $invoice->renderWith('ProcessedInvoice');
+		return $this->renderWith(Page::class);
+	}
+	
+	public function pdtCancel(SS_HTTPRequest $request)
+	{
+		$this->Content = 'Transaction cancelled';
 		return $this->renderWith(Page::class);
 	}
 	

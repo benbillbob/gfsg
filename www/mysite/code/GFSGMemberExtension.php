@@ -18,7 +18,7 @@ class GFSGMemberExtension extends DataExtension {
 
   public function updateMemberFormFields(FieldList $fields) {
     $fields->push(new TextField('TxnId', 'TxnId'));
-	$fields->push($membershipField = DropdownField::create('MembershipID', 'Please choose an Membership type', Membership::get()->map('ID', 'ItemName')));
+	$fields->push($membershipField = DropdownField::create('MembershipID', 'Membership', Membership::get()->map('ID', 'Title')));
     $fields->push(new DateField('MembershipExpiry', 'MembershipExpiry'));
     $fields->push(new CheckboxField('WithJournal', 'WithJournal'));
 	

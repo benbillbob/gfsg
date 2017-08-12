@@ -27,39 +27,18 @@ class Membership extends Item {
 		return $fields;
 	}
 	
+	public function getTitle(){
+		return $this->ItemName;
+	}
+	
 	private static $summary_fields =array(
 		'ItemName' => 'Membership Type',
 		'ItemNumber' => 'Membership Code'
 	);
 	
-	public function FormAction()
+	public function IsMerchandise()
 	{
-		return MiniCart::get_form_action();
-	}
-
-	public function Business()
-	{
-		return MiniCart::get_business_email();
-	}
-
-	public function CurrencyCode()
-	{
-		return MiniCart::get_currency_code();
-	}
-	
-	public function ReturnUrl()
-	{
-		return MiniCart::get_return_page(). '/pdtReturn';
-	}
-
-	public function CancelUrl()
-	{
-		return MiniCart::get_cancel_page(). '/pdtReturn';
-	}
-
-	public function Custom()
-	{
-		return Member::currentUser()->ID;
+		return false;
 	}
 	
 	public function ButtonText()

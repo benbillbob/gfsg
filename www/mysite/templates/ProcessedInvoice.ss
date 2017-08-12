@@ -1,11 +1,9 @@
 <h4>Thank you for your purchase.</h4>
 
-Your membership has been updated to
+Your purchase of
 <ul>
     <% loop $InvoiceLines.Limit(1) %>
         <li>$Item.ItemName</li>
     <% end_loop %>
-	
-	$Member.MembershipExpiry.nice
 </ul>
-
+has been processed

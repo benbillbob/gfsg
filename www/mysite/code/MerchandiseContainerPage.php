@@ -1,18 +1,18 @@
 <?php
-class MembershipContainerPage extends Page {
+class MerchandiseContainerPage extends Page {
 	private static $db = array ();
 	private static $has_many = array(
-        'Memberships' => 'Membership'
+        'Items' => 'Item'
     );
 	
 	public function getCMSFields() {
 		$fields = parent::getCMSFields();
-		$fields->addFieldToTab('Root.Memberships', GridField::create('Memberships', 'Memberships', $this->Memberships(), GridFieldConfig_RecordEditor::create()));
+		$fields->addFieldToTab('Root.Merchandise', GridField::create('Items', 'Items', $this->Items(), GridFieldConfig_RecordEditor::create()));
 		return $fields;
 	}}
 
 
-class MembershipContainerPage_Controller extends Page_Controller 
+class MerchandiseContainerPage_Controller extends Page_Controller 
 {
 	public function init() 
 	{
@@ -47,6 +47,7 @@ class MembershipContainerPage_Controller extends Page_Controller
 		$invoiceLine = InvoiceLine::create();
 		$invoiceLine->InvoiceID = $invoice->ID;
 		$invoiceLine->ItemID = $item->ID;
+		$invoiceLine->Quantity = $postVars['quantity'];
 		$invoiceLine->Amount = $postVars['amount'];
 		$invoiceLine->write();
 		
@@ -58,21 +59,9 @@ class MembershipContainerPage_Controller extends Page_Controller
 		return DB::query('SELECT uuid()')->value();
 	}
 	
-	public function visibleMemberships()
+	public function parentItems()
 	{
-		if(Member::currentUser()->inGroup('committee-member'))
-		{		
-			Debug::Message('in group');
-			return $this->Memberships()->filter(array(
-				'ParentItemId' => '0'
-			));
-		}
-		Debug::Message('not in group');
-
-		return $this->Memberships()->filter(array(
-			'ParentItemId' => '0',
-			'ItemNumber:StartsWith:not' => 'CT'
-		));
+		$this->Memberships()->filter(array('ParentItemID', '0'));
 	}
 }
 

@@ -11,7 +11,8 @@
 		"cwsoft/silverstripe-shortcode": "^2.2",
 		"symbiote/silverstripe-memberprofiles": "^2.0",
 		"sunnysideup/themes_ssu_flava": "^4.2",
-		"rywa/silverstripe-minicart": "^1.0"
+		"rywa/silverstripe-minicart": "^1.0",
+		"jonshutt/silverstripe-sortable-gallery-field": "dev-master"
 	},
 	"require-dev": {
 		"phpunit/PHPUnit": "~3.7@stable"

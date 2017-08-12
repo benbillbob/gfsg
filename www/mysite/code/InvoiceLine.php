@@ -22,11 +22,21 @@ class InvoiceLine extends DataObject {
 	public function process($member)
 	{
 		$item = $this->Item();
-		if (!($item instanceof Membership))
+		if ($item instanceof Membership)
 		{
-			return 'Not a Membership';
+			return $this->processMembership($member);
 		}
-		
+
+		return $this->processItem($member);
+	}
+	
+	private function processItem($member)
+	{
+		return null;
+	}
+	
+	private function processMembership($member)
+	{
 		if (!$member)
 		{
 			return 'Not a member';

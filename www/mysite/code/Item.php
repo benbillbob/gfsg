@@ -9,9 +9,10 @@ class Item extends DataObject {
 	);
 	
 	private static $has_one = array(
+		'MerchandiseContainerPage' => 'MerchandiseContainerPage',
 		'ParentItem' => 'Item'
 	);
-
+	
 	private static $has_many = array(
 		'ChildItems' => 'Item'
 	);
@@ -53,16 +54,26 @@ class Item extends DataObject {
 	
 	public function ReturnUrl()
 	{
-		return MiniCart::get_return_page();
+		return rtrim(MiniCart::get_return_page(),"/"). '/pdtReturn';
 	}
 
 	public function CancelUrl()
 	{
-		return MiniCart::get_cancel_page();
+		return rtrim(MiniCart::get_return_page(),"/"). '/pdtCancel';
 	}
 
 	public function Custom()
 	{
 		return Member::currentUser()->ID;
+	}
+	
+	public function IsMerchandise()
+	{
+		return true;
+	}
+	
+	public function ButtonText()
+	{
+		return 'Buy Now';
 	}
 }
