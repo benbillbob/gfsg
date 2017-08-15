@@ -1,6 +1,7 @@
 <?php
 class BannerPage extends Page {
-	private static $db = array ();
+	private static $db = array (
+		'BannerOptions' => 'Text');
 	
 	static $many_many = array(
         'Images' => 'Image'
@@ -11,6 +12,7 @@ class BannerPage extends Page {
 
         $f = new SortableGalleryField('Images', 'My Images');
         $fields->addFieldToTab('Root.Images', $f);
+        $fields->addFieldToTab('Root.Images', TextareaField::create('BannerOptions'));
 
         return $fields;
     }
@@ -25,7 +27,7 @@ class BannerPage_Controller extends Page_Controller
 		Requirements::javascript("mysite/js/jssor.js");
 		Requirements::customScript('
 			jssor_slider1_init = function (containerId) {
-				var options = { $AutoPlay: 1 };
+				var options = '. $this->BannerOptions .';
 				var jssor_slider1 = new  $JssorSlider$(containerId, options);
 			};
 			jssor_slider1_init("slider1_container");

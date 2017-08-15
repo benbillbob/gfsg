@@ -62,12 +62,10 @@ class MembershipContainerPage_Controller extends Page_Controller
 	{
 		if(Member::currentUser()->inGroup('committee-member'))
 		{		
-			Debug::Message('in group');
 			return $this->Memberships()->filter(array(
 				'ParentItemId' => '0'
 			));
 		}
-		Debug::Message('not in group');
 
 		return $this->Memberships()->filter(array(
 			'ParentItemId' => '0',
