@@ -46,7 +46,6 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
   body a { text-decoration: none; } /* this removes the underline from all links */
-  body a:link { -webkit-tap-highlight-color: #b80000 } /* this sets the highlight color when links are tapped on Safari (browser) on iPhone */
 
 
 /* HEADERS */
@@ -87,7 +86,6 @@ body {
 
 ::selection,
 ::-moz-selection { /* Applies style to highlighted portion of a page */
-    background: #b80000;
     color: #fff;
     text-shadow: none;
 }
@@ -95,11 +93,9 @@ body {
 /* LINKS */
 .typography a, 
 .typography a.intro {
-    color: #B80000;
     text-decoration: none;
 }
   .typography a:hover { 
-    color: #D80000;
     border-bottom: 1px dashed #B80000;
   }
   .typography a:focus { }
