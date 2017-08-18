@@ -58,10 +58,5 @@ class MerchandiseContainerPage_Controller extends Page_Controller
 	{
 		return DB::query('SELECT uuid()')->value();
 	}
-	
-	public function parentItems()
-	{
-		$this->Memberships()->filter(array('ParentItemID', '0'));
-	}
 }
 

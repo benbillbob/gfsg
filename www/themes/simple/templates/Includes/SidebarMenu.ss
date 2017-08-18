@@ -1,6 +1,8 @@
 <%--Include SidebarMenu recursively --%>
 <% if LinkOrSection = section %>
+	t
 	<% if $Children %>
+	h
 		<% loop $Children %>
 			<li class="$LinkingMode">
 				<a href="$Link" class="$LinkingMode" title="Go to the $Title.XML page">
