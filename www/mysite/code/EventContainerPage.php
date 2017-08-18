@@ -46,7 +46,8 @@ class EventContainerPage_Controller extends Page_Controller
 		
 		$format = '{
 			"title": "%s",
-			"start": "%s"},
+			"start": "%s",
+			"url": "%s"},
 		';
 		
 		$events = Event::get();
@@ -62,7 +63,7 @@ class EventContainerPage_Controller extends Page_Controller
 		$data = '[';
 		
 		foreach($events as $event) {
-			$data = $data . sprintf($format, $event->Title, $event->StartDate);
+			$data = $data . sprintf($format, $event->Title, $event->StartDate, $event->Link());
 		}
 		
 		$data = substr(trim($data), 0, -1);
