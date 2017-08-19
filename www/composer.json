@@ -12,7 +12,8 @@
 		"symbiote/silverstripe-memberprofiles": "^2.0",
 		"sunnysideup/themes_ssu_flava": "^4.2",
 		"rywa/silverstripe-minicart": "^1.0",
-		"jonshutt/silverstripe-sortable-gallery-field": "dev-master"
+		"jonshutt/silverstripe-sortable-gallery-field": "dev-master",
+		"silverstripers/silverstripe-timefield": "dev-master"
 	},
 	"require-dev": {
 		"phpunit/PHPUnit": "~3.7@stable"

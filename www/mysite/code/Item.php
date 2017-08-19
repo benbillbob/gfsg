@@ -8,6 +8,25 @@ class Item extends DataObject {
 		'DescriptionContent' => 'HTMLText'
 	);
 	
+	private static $indexes = array(
+        'itemNumberUnique' => 'unique("ItemNumber")'
+    );
+	
+	public function validate() {
+		$valid = parent::validate();
+
+		$duplicate = Item::get()
+				->filter(array(
+					'ItemNumber' => $this->ItemNumber
+				))
+				->exclude('ID', $this->ID);
+		if ($duplicate->exists()) {
+			$valid->error('duplicate entry');
+		}
+
+		return $valid;
+	}
+	
 	private static $has_one = array(
 		'MerchandiseContainerPage' => 'MerchandiseContainerPage',
 		'ParentItem' => 'Item'

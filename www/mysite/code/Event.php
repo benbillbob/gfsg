@@ -3,11 +3,15 @@ class Event extends DataObject {
 	private static $db = array (
 		'Title' => 'Varchar',
 		'Content' => 'HTMLText',
-		'StartDate' => 'Date',
-		'EndDate' => 'Date',
-		'StartTime' => 'Time',
-		'EndTime' => 'Time',
-		'TotalTickets' => 'int'
+		'EventStartDate' => 'Date',
+		'EventStartTime' => 'Time',
+		'EventEndDate' => 'Date',
+		'EventEndTime' => 'Time',
+		'TotalTickets' => 'int',
+		'OnSaleStartDate' => 'Date',
+		'OnSaleStartTime' => 'Time',
+		'OnSaleEndDate' => 'Date',
+		'OnSaleEndTime' => 'Time'
 	);
 	
 	private static $has_one = array(
@@ -19,15 +23,25 @@ class Event extends DataObject {
 		'EventTicketTypes' => 'EventTicketType'
 	);
 	
+	function onBeforeWrite() {
+		Debug::show($this);
+		parent::onBeforeWrite();
+	}
+	
 	public function getCMSFields() {
 		$fields = FieldList::create(
 			TextField::create('Title'),
 			HTMLEditorField::create('Content'),
-			DateField::create('StartDate'),
-			TimeField::create('StartTime'),
-			DateField::create('EndDate'),
-			TimeField::create('EndTime'),
-			NumericField::create('TotalTickets')
+			DateField::create('EventStartDate'),
+			TimeField::create('EventStartTime'),
+			DateField::create('EventEndDate'),
+			TimeField::create('EventEndTime'),
+			NumericField::create('TotalTickets'),
+			DateField::create('OnSaleStartDate'),
+			TimeField::create('OnSaleStartTime'),
+			DateField::create('OnSaleEndDate'),
+			TimeField::create('OnSaleEndTime'),
+			GridField::create('EventTicketTypes', 'EventTicketTypes', $this->EventTicketTypes(), GridFieldConfig_RecordEditor::create())
 		);
 		
 		return $fields;
