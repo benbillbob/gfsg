@@ -23,11 +23,6 @@ class Event extends DataObject {
 		'EventTicketTypes' => 'EventTicketType'
 	);
 	
-	function onBeforeWrite() {
-		Debug::show($this);
-		parent::onBeforeWrite();
-	}
-	
 	public function getCMSFields() {
 		$fields = FieldList::create(
 			TextField::create('Title'),
