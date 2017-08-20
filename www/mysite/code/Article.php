@@ -7,7 +7,8 @@ class Article extends DataObject {
 	);
 	
 	private static $has_one = array(
-		'NewsPage' => 'NewsPage'
+		'NewsPage' => 'NewsPage',
+		'Image' => 'Image'
 	);
 	
 	
@@ -15,7 +16,11 @@ class Article extends DataObject {
 		$fields = FieldList::create(
 			TextField::create('Title'),
 			HTMLEditorField::create('Summary'),
-			HTMLEditorField::create('Content')
+			HTMLEditorField::create('Content'),
+			$uploadField = new UploadField(
+                    $name = 'Image',
+                    $title = 'Upload a single image'
+                )  
 		);
 		
 		return $fields;

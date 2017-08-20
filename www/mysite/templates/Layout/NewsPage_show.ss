@@ -3,7 +3,8 @@
 	<article>
 		<% with $Article %>
 		<h1>$Title</h1>
-		<div class="content">$Content</div>
+		<A href="$NewsPage.Link">Back</a>
+		<div class="content">$Image $Content</div>
 		<% end_with %>
 	</article>
 		$Form
