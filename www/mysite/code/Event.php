@@ -42,6 +42,34 @@ class Event extends DataObject {
 		return $fields;
 	}
 	
+	public function EventStartDateTime(){
+		$date = $this->EventStartDate;
+		$time = $this->EventStartTime;
+		
+		return Event::DateTimeString($date, $time);
+	}
+
+	public function EventEndDateTime(){
+		$date = $this->EventEndDate;
+		$time = $this->EventEndTime;
+		
+		return Event::DateTimeString($date, $time);
+	}
+	
+	public static function DateTimeString($date, $time){
+		if (!$date){
+			return null;
+		}
+		
+		$str = $date;
+		if ($time){
+			$str .=' '.$time;
+		}
+		
+		$merge = new DateTime($str);
+		return $merge->format(DateTime::ATOM);
+	}
+	
 	public function Link(){
 		return $this->EventContainerPage()->Link('show/' . $this->ID);
 	}

@@ -47,13 +47,14 @@ class EventContainerPage_Controller extends Page_Controller
 		$format = '{
 			"title": "%s",
 			"start": "%s",
+			"end": "%s",
 			"url": "%s"},
 		';
 		
 		$events = Event::get();
 
 		if ($start && $end){
-			$events = $events->filter(array('EventStartDate:GreaterThan' => $start, 'EventEndDate:LessThan' => $end));
+			$events = $events->filter(array('EventStartDate:GreaterThan' => $start, 'EventStartDate:LessThan' => $end));
 		}
 
 		if (count($events) == 0){
@@ -63,7 +64,7 @@ class EventContainerPage_Controller extends Page_Controller
 		$data = '[';
 		
 		foreach($events as $event) {
-			$data = $data . sprintf($format, $event->Title, $event->EventStartDate, $event->Link());
+			$data = $data . sprintf($format, $event->Title, $event->EventStartDateTime(), $event->EventEndDateTime(), $event->Link());
 		}
 		
 		$data = substr(trim($data), 0, -1);
