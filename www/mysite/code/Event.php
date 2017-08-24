@@ -46,17 +46,31 @@ class Event extends DataObject {
 		$date = $this->EventStartDate;
 		$time = $this->EventStartTime;
 		
-		return Event::DateTimeString($date, $time);
+		return Event::ISODateTimeString($date, $time);
 	}
 
 	public function EventEndDateTime(){
 		$date = $this->EventEndDate;
 		$time = $this->EventEndTime;
 		
-		return Event::DateTimeString($date, $time);
+		return Event::ISODateTimeString($date, $time);
 	}
 	
-	public static function DateTimeString($date, $time){
+	public function OnSaleStartDateTime(){
+		$date = $this->OnSaleStartDate;
+		$time = $this->OnSaleStartTime;
+		
+		return Event::ISODateTimeString($date, $time);
+	}
+
+	public function OnSaleEndDateTime(){
+		$date = $this->OnSaleEndDate;
+		$time = $this->OnSaleEndTime;
+		
+		return Event::ISODateTimeString($date, $time);
+	}
+
+	public static function ISODateTimeString($date, $time){
 		if (!$date){
 			return null;
 		}
@@ -69,6 +83,20 @@ class Event extends DataObject {
 		$merge = new DateTime($str);
 		return $merge->format(DateTime::ATOM);
 	}
+	
+	public function OnSaleNow(){
+		$start = $this->OnSaleStartDateTime();
+		$end = $this->OnSaleEndDateTime();
+		
+		if (!$start || !$end){
+			return false;
+		}
+		
+		$now = (new DateTime('NOW'))->format(DateTime::ATOM);
+		Debug::Show($now);
+		return $start < $now && $now < $end;
+	}
+	
 	
 	public function Link(){
 		return $this->EventContainerPage()->Link('show/' . $this->ID);
