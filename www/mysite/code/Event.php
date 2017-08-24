@@ -24,8 +24,11 @@ class Event extends DataObject {
 	);
 	
 	public function getCMSFields() {
+		$insertableFieldKeys = str_replace(array('&lt;?php&nbsp;','?&gt;'), '', highlight_string( '<?php ' .     var_export($this->InsertableFields(), true) . ' ?>', true ) );
+		
 		$fields = FieldList::create(
 			TextField::create('Title'),
+			ReadOnlyField::create('Fields', $insertableFieldKeys, 'Fields replaced in content'),
 			HTMLEditorField::create('Content'),
 			DateField::create('EventStartDate'),
 			TimeField::create('EventStartTime'),
@@ -40,6 +43,31 @@ class Event extends DataObject {
 		);
 		
 		return $fields;
+	}
+	
+	private function InsertableFields()
+	{
+		return array(
+			'$Title' => $this->Title,
+			'$EventStartDate' => (new DateTime($this->EventStartDate))->format('d/m/Y'),
+			'$EventEndDate' => (new DateTime($this->EventEndDate))->format('d/m/Y'),
+			'$OnSaleStartDate' => (new DateTime($this->OnSaleStartDate))->format('d/m/Y'),
+			'$OnSaleEndDate' => (new DateTime($this->OnSaleEndDate))->format('d/m/Y'),
+			'$EventStartTime' => $this->EventStartTime,
+			'$EventEndTime' => $this->EventEndTime,
+			'$OnSaleStartTime' => $this->OnSaleStartTime,
+			'$OnSaleEndTime' => $this->OnSaleEndTime
+		);
+	}
+	
+	public function ParsedContent(){
+		$content = $this->Content;
+
+		foreach ($this->InsertableFields() as $key => $value) {
+			$content = str_replace($key, $value, $content);
+		}
+		
+		return $content;
 	}
 	
 	public function EventStartDateTime(){
