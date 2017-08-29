@@ -12,3 +12,8 @@ Member:
 Group:
   extensions:
    - GFSGGroupExtension
+Email:
+  admin_email: ben@benbillbob.com
+SiteConfig:
+  extensions:
+   - MySiteConfig

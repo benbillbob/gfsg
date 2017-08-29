@@ -27,7 +27,8 @@ class Invoice extends DataObject {
 	public function processPurchase()
 	{
 		$error = null;
-		$invoiceLines = $this->InvoiceLines();
+		$invoiceLines = $this->InvoiceLines()->toArray();
+		
 		foreach($invoiceLines as $line) {
 			$error = $line->process($this->Member());
 			if ($error)

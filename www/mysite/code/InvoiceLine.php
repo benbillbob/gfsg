@@ -22,16 +22,29 @@ class InvoiceLine extends DataObject {
 	public function process($member)
 	{
 		$item = $this->Item();
-		if ($item instanceof Membership)
+		if (!is_subclass_of($item, Item::class))
+		{
+			return $this->processItem($member);
+		}
+		else if ($item instanceof Membership)
 		{
 			return $this->processMembership($member);
 		}
-
-		return $this->processItem($member);
+		
+		return 'Unknown line type';
 	}
 	
 	private function processItem($member)
 	{
+		$body = $this->ItemName;
+		
+		$email = new Email();
+		$email
+			->setTo(SiteConfig::current_site_config()->ItemPurchaseEmail)
+			->setSubject('GFSG Purchase')
+			->setBody($body);
+			
+		$email->sendPlain($body);
 		return null;
 	}
 	
@@ -49,8 +62,8 @@ class InvoiceLine extends DataObject {
 			$membershipExpiry = $dt->format("Y-m-d");
 		}
 		
-		$membershipExpiry = DateHelper::addmonths(new DateTime($membershipExpiry), $item->MembershipMonths);
-		$this->updateMember($member, $item, $membershipExpiry);
+		$membershipExpiry = DateHelper::addmonths(new DateTime($membershipExpiry), $this->Item()->MembershipMonths);
+		$this->updateMember($member, $this->Item(), $membershipExpiry);
 		
 		return null;
 	}

@@ -9,12 +9,12 @@ class InvoiceTest extends SapphireTest {
 		$this->assertEquals($item->ItemName, 'MembershipItem1');
 	}
 
-	public function testFailsForNonMembershipItem(){
+	public function testSucceedsForItem(){
 		$invoice = Invoice::get()->filter('TxnId', 'NonMembershipInvoice')->first();
 		$this->assertNotNull($invoice);
 		$result = $invoice->processPurchase();
-		$this->assertEquals('Not a Membership', $result);
-		$this->assertEquals($invoice->Status, Invoice::STATUS_PENDING);
+		$this->assertNull($result);
+		$this->assertEquals($invoice->Status, Invoice::STATUS_COMPLETE);
 	}
 
 	public function testSucceedsForMembershipItem(){

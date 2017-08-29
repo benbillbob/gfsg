@@ -140,6 +140,8 @@ class Mailer extends Object {
 	 * @return mixed Return false if failure, or list of arguments if success
 	 */
 	public function sendPlain($to, $from, $subject, $plainContent, $attachedFiles = array(), $customHeaders = array()) {
+				Debug::Message('worked?1');
+
 		// Prepare plain text body
 		$fullBody = $this->encodeMessage($plainContent, $this->getMessageEncoding());
 		$headers["Content-Type"] = "text/plain; charset=utf-8";
