@@ -29,12 +29,21 @@ class Invoice extends DataObject {
 		$error = null;
 		$invoiceLines = $this->InvoiceLines()->toArray();
 		
+		$ticketLines = array();
+		
 		foreach($invoiceLines as $line) {
 			$error = $line->process($this->Member());
-			if ($error)
-			{
+			if ($error){
 				break;
 			}
+			
+			if ($line->Item() instanceof EventTicketType) {
+				$ticketLines[] = $line;
+			}
+		}
+		
+		if (!$error){
+			$this->processTicketLines($ticketLines);
 		}
 		
 		if ($error)
@@ -50,6 +59,26 @@ class Invoice extends DataObject {
 		$this->write();
 		
 		return $error;
+	}
+	
+	function processTicketLines($ticketLines){
+		if (!$ticketLines){
+			return;
+		}
+		
+		$ticket = EventTicket::create();
+		$eventID;
+		
+		foreach($ticketLines as $line){
+			$ticketLine = EventTicketLine::create();
+			$ticketLine->Quantity = $line->Quantity;
+			$ticketLine->EventTicketTypeID = $line->EventTicketTypeID;
+			$eventID = $line->Item()->EventID;
+			$ticket->EventTicketLines()->add($ticketLine);
+		}
+		
+		$ticket->EventTicketID = $eventID;
+		$ticket->write();
 	}
 	
 	const STATUS_PROCESSING = 'processing';

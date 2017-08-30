@@ -4,7 +4,11 @@ class EventTicket extends DataObject {
 	);
 	
 	private static $has_one = array(
-		'EventTicketType' => 'EventTicketType',
-		'Event' => 'Event'
+		'Event' => 'Event',
+		'Member' => 'Member'
+	);
+
+	private static $has_many = array(
+		'EventTicketLines' => 'EventTicketLine'
 	);
 }

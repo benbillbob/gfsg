@@ -30,6 +30,9 @@ class InvoiceLine extends DataObject {
 		{
 			return $this->processMembership($member);
 		}
+		else if ($item instanceof EventTicketType){
+			return null;
+		}
 		
 		return 'Unknown line type';
 	}
