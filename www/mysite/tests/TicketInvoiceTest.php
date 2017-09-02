@@ -24,10 +24,13 @@ class TicketInvoiceTest extends SapphireTest {
 		
 		$event = Event::get()->first();
 		$ticket = EventTicket::get()->first();
+		$this->assertNotNull($ticket->Barcode);
+		$this->assertEquals(16, strlen($ticket->Barcode));
 		$this->assertNotNull($ticket);
-		Debug::Show($ticket);
 		$ticketEvent = $ticket->Event();
 		$this->assertNotNull($ticketEvent);
 		$this->assertEquals($event->Title, $ticketEvent->Title);
+		$ticketLine = $ticket->EventTicketLines()->first();
+		$this->assertEquals('AdultTicketTypeName', $ticketLine->EventTicketType()->ItemName);
 	}
 }

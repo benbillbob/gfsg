@@ -17,3 +17,7 @@ Email:
 SiteConfig:
   extensions:
    - MySiteConfig
+SSViewer:
+  source_file_comments: true
+Only:
+  environment: 'dev'

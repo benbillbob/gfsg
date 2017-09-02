@@ -1,5 +1,7 @@
 <?php
-class EventContainerPage extends Page {
+require_once('InvoicePage.php');
+
+class EventContainerPage extends InvoicePage {
 	private static $db = array ();
 	private static $has_many = array(
         'Events' => 'Event'
@@ -12,7 +14,7 @@ class EventContainerPage extends Page {
 	}}
 
 
-class EventContainerPage_Controller extends Page_Controller 
+class EventContainerPage_Controller extends InvoicePage_Controller 
 {
 	public function init() 
 	{
@@ -22,6 +24,8 @@ class EventContainerPage_Controller extends Page_Controller
 		Requirements::javascript("mysite/external/fullcalendar/moment.min.js");
 		Requirements::javascript("mysite/external/fullcalendar/fullcalendar.min.js");
 		Requirements::css("mysite/external/fullcalendar/fullcalendar.min.css");
+		// $settings = MiniCart::getMiniCartConfig();
+		// Requirements::customScript('paypal.minicart.render(' . $settings . ');', 'minicart');
 		
 		Requirements::customScript('
 		$(document).ready(function() {
@@ -35,7 +39,9 @@ class EventContainerPage_Controller extends Page_Controller
 	private static $allowed_actions = array(
         'createInvoice',
 		'show',
-		'events'
+		'events',
+		'ticket',
+		'barcode'
 	);
 	
 	public function events(SS_HTTPRequest $request) {
@@ -74,6 +80,10 @@ class EventContainerPage_Controller extends Page_Controller
 	}
 	
 	public function show(SS_HTTPRequest $request) {
+		if ($request->param('OtherID') == 'createInvoice'){
+			return $this->createInvoice($request);
+		}
+		
 		$event = Event::get()->byID($request->param('ID'));
 		if (!$event){
 			return $this->httpError(404, 'Could not find event');
@@ -82,37 +92,19 @@ class EventContainerPage_Controller extends Page_Controller
 		return array('Event' => $event);
 	}
 	
-	public function createInvoice(SS_HTTPRequest $request) {
-        $postVars = $request->postVars();
-
-		$item = Item::get()->filter('ItemNumber', $postVars['item_number'])->first();
-		
-		if (!$item)
-		{
-			throw new Exception('Item - ' . $postVars['item_number'] . ' not found.');
-		}
-		
-		$id = $this->createTxnId();
-		$invoice = Invoice::create();
-		$invoice->TxnId = $id;
-		$invoice->Status = Invoice::STATUS_PENDING;
-		$invoice->Processed = false;
-		$invoice->MemberID = Member::currentUser()->ID;
-		$invoice->write();
-		
-		$invoiceLine = InvoiceLine::create();
-		$invoiceLine->InvoiceID = $invoice->ID;
-		$invoiceLine->ItemID = $item->ID;
-		$invoiceLine->Quantity = $postVars['quantity'];
-		$invoiceLine->Amount = $postVars['amount'];
-		$invoiceLine->write();
-		
-		return $id;
-    }
+	public function barcode(SS_HTTPRequest $request) {
+		$generator = new Picqer\Barcode\BarcodeGeneratorPNG();	
+		$this->response->addHeader("Content-Type", "image/png");
+		return $generator->getBarcode($request->param('ID'), $generator::TYPE_CODE_128);
+	}
 	
-	private function createTxnId()
-	{
-		return DB::query('SELECT uuid()')->value();
+	public function ticket(SS_HTTPRequest $request) {
+		$ticket = EventTicket::get()->byID($request->param('ID'));
+		if (!$ticket){
+			return $this->httpError(404, 'Could not find ticket');
+		}
+
+		return array('Ticket' => $ticket);
 	}
 }
 

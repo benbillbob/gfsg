@@ -50,7 +50,7 @@ class MiniCartPageExtension extends DataExtension
         $settings = MiniCart::getMiniCartConfig();
         $config = SiteConfig::current_site_config();
         Requirements::javascript(MODULE_MINICART_DIR . '/bower_components/minicart/dist/' . $minicart);
-        //Requirements::customScript('paypal.minicart.render(' . $settings . ');', 'minicart');
+        Requirements::customScript('paypal.minicart.render(' . $settings . ');', 'minicart');
         // reset cart after successful checkout
         if (isset($_GET['ppsuccess']) || $this->owner->ID == $config->MiniCartReturnPageID) {
             Requirements::customScript('paypal.minicart.reset();', 'minicart_reset');

@@ -18,7 +18,8 @@ class Invoice extends DataObject {
 		$fields = FieldList::create(
 			TextField::create('TxnId'),
 			TextField::create('PayPalTx'),
-			TextField::create('Status')
+			TextField::create('Status'),
+			GridField::create('Lines', 'Lines', $this->InvoiceLines(), GridFieldConfig_RecordEditor::create())
 		);
 		
 		return $fields;
@@ -72,13 +73,26 @@ class Invoice extends DataObject {
 		foreach($ticketLines as $line){
 			$ticketLine = EventTicketLine::create();
 			$ticketLine->Quantity = $line->Quantity;
-			$ticketLine->EventTicketTypeID = $line->EventTicketTypeID;
+			$ticketLine->EventTicketTypeID = $line->Item()->ID;
 			$eventID = $line->Item()->EventID;
 			$ticket->EventTicketLines()->add($ticketLine);
 		}
 		
-		$ticket->EventTicketID = $eventID;
+		$ticket->EventID = $eventID;
+		$ticket->Barcode = $this->makeBarcode();
 		$ticket->write();
+	}
+	
+	private function makeBarcode(){
+		$existing = true;
+		$str;
+		while($existing){
+			$bytes = random_bytes(8);
+			$str = bin2hex($bytes);
+			$existing = EventTicket::get()->filter(array('Barcode' => $str))->first();
+		}
+		
+		return $str;
 	}
 	
 	const STATUS_PROCESSING = 'processing';
