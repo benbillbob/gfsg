@@ -152,15 +152,12 @@ class Ipn {
     }
     
     private function getPaypalHost() {
-		Debug::show($this->use_sandbox);
 		if ($this->use_sandbox)
 		{
-			Debug::show(Ipn::SANDBOX_HOST);
 			return Ipn::SANDBOX_HOST;
 		}	
         else 
 		{
-			Debug::show(Ipn::PAYPAL_HOST);
 			return Ipn::PAYPAL_HOST;
 		}
     }

@@ -18,6 +18,6 @@ SiteConfig:
   extensions:
    - MySiteConfig
 SSViewer:
-  source_file_comments: true
+  source_file_comments: false
 Only:
   environment: 'dev'

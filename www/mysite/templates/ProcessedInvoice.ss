@@ -5,5 +5,9 @@ Your purchase of
     <% loop $InvoiceLines.Limit(1) %>
         <li>$Item.ItemName</li>
     <% end_loop %>
+	
+	<% if $EventTicket %>
+		<a href=$EventTicket.Link()>Ticket Link</a>
+	<% end_if %>
 </ul>
 has been processed

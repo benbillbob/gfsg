@@ -8,6 +8,7 @@ class Invoice extends DataObject {
 	
 	private static $has_one = array(
 		'Member' => 'Member',
+		'EventTicket' => 'EventTicket'
 	);
 	
 	private static $has_many = array(
@@ -27,6 +28,10 @@ class Invoice extends DataObject {
 	
 	public function processPurchase()
 	{
+		if ($this->Status == Invoice::STATUS_COMPLETE){
+			return;
+		}
+		
 		$error = null;
 		$invoiceLines = $this->InvoiceLines()->toArray();
 		
@@ -49,7 +54,6 @@ class Invoice extends DataObject {
 		
 		if ($error)
 		{
-			Debug::show($error);
 			$this->Status = Invoice::STATUS_PENDING;
 		}
 		else
@@ -81,6 +85,9 @@ class Invoice extends DataObject {
 		$ticket->EventID = $eventID;
 		$ticket->Barcode = $this->makeBarcode();
 		$ticket->write();
+
+		$this->EventTicketID = $ticket->ID;
+		$this->write();
 	}
 	
 	private function makeBarcode(){

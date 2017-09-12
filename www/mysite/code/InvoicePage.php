@@ -1,5 +1,12 @@
 <?php
 class InvoicePage extends Page {
+	private static $db = array ('UseMiniCart' => 'Boolean');
+	
+	public function getCMSFields() {
+		$fields = parent::getCMSFields();
+		$fields->addFieldToTab('Root.Main', CheckboxField::create('UseMiniCart'));
+		return $fields;
+	}
 }
 
 class InvoicePage_Controller extends Page_Controller 
@@ -8,6 +15,11 @@ class InvoicePage_Controller extends Page_Controller
 	{
 		Requirements::set_force_js_to_bottom(true);
 		Requirements::javascript(THIRDPARTY_DIR."/jquery/jquery.js");
+		if ($this->UseMiniCart){
+			$settings = MiniCart::getMiniCartConfig();
+			Requirements::customScript('paypal.minicart.render(' . $settings . ');', 'minicart');
+		}
+		
 		Requirements::javascript("mysite/code/CreateInvoice.js");
 		parent::init();
 	}
@@ -17,16 +29,13 @@ class InvoicePage_Controller extends Page_Controller
 	);
 	
 	public function createInvoice(SS_HTTPRequest $request) {
-        $postVars = $request->postVars();
+		$this->getResponse()->addHeader("Content-type", "text/plain");
 
-		$item = Item::get()->filter('ItemNumber', $postVars['item_number'])->first();
-		
-		if (!$item)
-		{
-			throw new Exception('Item - ' . $postVars['item_number'] . ' not found.');
-		}
+		$jsonString = $request->getBody();
+		$items = json_decode($jsonString, true);
 		
 		$id = $this->createTxnId();
+		
 		$invoice = Invoice::create();
 		$invoice->TxnId = $id;
 		$invoice->Status = Invoice::STATUS_PENDING;
@@ -34,13 +43,26 @@ class InvoicePage_Controller extends Page_Controller
 		$invoice->MemberID = Member::currentUser()->ID;
 		$invoice->write();
 		
-		$invoiceLine = InvoiceLine::create();
-		$invoiceLine->InvoiceID = $invoice->ID;
-		$invoiceLine->ItemID = $item->ID;
-		$invoiceLine->Amount = $postVars['amount'];
-		$invoiceLine->write();
+		foreach ($items as $value){
+			$itemNumber = $value['item_number'];
+			$item = Item::get()->filter('ItemNumber', $itemNumber)->first();
+			
+			if (!$item)
+			{
+				throw new Exception('Item - ' . $itemNumber . ' not found.');
+			}
+			
+			$invoiceLine = InvoiceLine::create();
+			$invoiceLine->InvoiceID = $invoice->ID;
+			$invoiceLine->ItemID = $item->ID;
+			$invoiceLine->Amount = $value['amount'];
+			$invoiceLine->Quantity = $value['quantity'];
+			$invoiceLine->write();
+		}
 		
-		return $id;
+		$this->getResponse()->setBody($id);
+
+		return $this->getResponse();
     }
 	
 	private function createTxnId()

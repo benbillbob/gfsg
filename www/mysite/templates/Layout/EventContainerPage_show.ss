@@ -13,6 +13,7 @@
 						<input type="hidden" name="business" value="$Business()" /><!-- SiteConfig -->
 						<input type="hidden" name="item_name" value="$ItemName" /><!-- Shortcode -->
 						<input type="hidden" name="item_number" value="$ItemNumber"><!-- Shortcode -->
+						<input type="hidden" name="quantity" value="1"><!-- Shortcode -->
 						<input type="hidden" name="amount" value="$Amount" /><!-- Shortcode -->
 						<input id="Custom" type="hidden" name="custom" /><!-- Runtime -->
 						<input type="hidden" name="currency_code" value="$CurrencyCode()" /><!-- SiteConfig -->

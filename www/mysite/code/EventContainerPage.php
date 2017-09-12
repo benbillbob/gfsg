@@ -20,12 +20,9 @@ class EventContainerPage_Controller extends InvoicePage_Controller
 	{
 		Requirements::set_write_js_to_body(false);
 		Requirements::javascript(THIRDPARTY_DIR."/jquery/jquery.js");
-		Requirements::javascript("mysite/code/CreateInvoice.js");
 		Requirements::javascript("mysite/external/fullcalendar/moment.min.js");
 		Requirements::javascript("mysite/external/fullcalendar/fullcalendar.min.js");
 		Requirements::css("mysite/external/fullcalendar/fullcalendar.min.css");
-		// $settings = MiniCart::getMiniCartConfig();
-		// Requirements::customScript('paypal.minicart.render(' . $settings . ');', 'minicart');
 		
 		Requirements::customScript('
 		$(document).ready(function() {

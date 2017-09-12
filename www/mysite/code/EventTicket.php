@@ -14,4 +14,8 @@ class EventTicket extends DataObject {
 	private static $has_many = array(
 		'EventTicketLines' => 'EventTicketLine'
 	);
+	
+	public function Link(){
+		return $this->Event()->EventContainerPage()->Link('ticket/' . $this->ID);
+	}
 }
