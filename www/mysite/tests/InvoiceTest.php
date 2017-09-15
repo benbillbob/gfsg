@@ -9,12 +9,20 @@ class InvoiceTest extends SapphireTest {
 		$this->assertEquals($item->ItemName, 'MembershipItem1');
 	}
 
-	public function testFailsForNonMembershipItem(){
+	public function testSucceedsForItem(){
+		$config = SiteConfig::current_site_config();
+		$config->ItemPurchaseEmail = 'TestEmail@test.com';
+		$config->write();
 		$invoice = Invoice::get()->filter('TxnId', 'NonMembershipInvoice')->first();
 		$this->assertNotNull($invoice);
 		$result = $invoice->processPurchase();
-		$this->assertEquals('Not a Membership', $result);
-		$this->assertEquals($invoice->Status, Invoice::STATUS_PENDING);
+		$this->assertNull($result);
+		$this->assertEquals($invoice->Status, Invoice::STATUS_COMPLETE);
+		
+		$mailer = Email::mailer();
+		$email = $mailer->findEmail(SiteConfig::current_site_config()->ItemPurchaseEmail);
+		$this->assertNotNull($email);
+		$this->assertEquals(SiteConfig::current_site_config()->ItemPurchaseEmail, $email['to']);
 	}
 
 	public function testSucceedsForMembershipItem(){

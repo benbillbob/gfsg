@@ -9,6 +9,7 @@ class PayPalReturnPage_Controller extends Page_Controller
 {
 	public function init() 
 	{
+		Requirements::customScript('paypal.minicart.reset();', 'minicart_reset');
 		parent::init();
 	}
 	
@@ -28,7 +29,12 @@ class PayPalReturnPage_Controller extends Page_Controller
 			return $invoice; // error message
 		}
 		
-		$invoice->processPurchase();
+		$error = $invoice->processPurchase();
+		
+		if ($error){
+			$this->Content = $error;
+			return $error;
+		}
 		
 		$this->Content = $invoice->renderWith('ProcessedInvoice');
 		return $this->renderWith(Page::class);

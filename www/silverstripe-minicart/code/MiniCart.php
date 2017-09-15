@@ -47,6 +47,7 @@ class MiniCart extends Object
     public static function getMiniCartConfig()
     {
         $settings = new ArrayData(array(
+			'Action' => MiniCart::get_form_action(),
             'Strings' => new ArrayData(array(
                 'Button' => addslashes(_t('MiniCartStrings.Button', 'Check Out with <img src="//cdnjs.cloudflare.com/ajax/libs/minicart/3.0.1/paypal_65x18.png" width="65" height="18" alt="PayPal" />')),
                 'ButtonAlt' => addslashes(_t('MiniCartStrings.ButtonAlt', 'Checkout')),
@@ -61,7 +62,7 @@ class MiniCart extends Object
 
     public static function get_form_action()
     {
-        $test_mode = SiteConfig::current_site_config()->MiniCartTestMode;
+		$test_mode = SiteConfig::current_site_config()->MiniCartTestMode;
         $paypal_url = Config::inst()->get('MiniCart', 'paypal_url');
         $sandbox_url = Config::inst()->get('MiniCart', 'paypal_sandbox_url');
 

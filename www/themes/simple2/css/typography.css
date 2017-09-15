@@ -155,7 +155,6 @@ body {
 -------------------------------------------- */
 .typography img {
     height: auto; /* resets the image height so that it maintains its aspect ratio when width is set */
-    background: transparent url(../images/ajax-loader.gif) no-repeat center center;
 }
 .typography img.left {
     float: left;

@@ -1,0 +1,36 @@
+Event:
+ Event1:
+  Title: EventTitle
+EventTicketType:
+ AdultTicketType:
+  ItemName: AdultTicketTypeName
+  ItemNumber: AdultTicketTypeNum
+  Amount: 2.00
+  NumberOfTickets: 1
+  Event: =>Event.Event1
+ ChildTicketType:
+  ItemName: ChildTicketTypeName
+  ItemNumber: ChildTicketTypeNum
+  Amount: 1.00
+  NumberOfTickets: 1
+  Event: =>Event.Event1
+ FamilyTicketType:
+  ItemName: FamilyTicketTypeName
+  ItemNumber: FamilyTicketTypeNum
+  Amount: 3.00
+  NumberOfTickets: 5
+  Event: =>Event.Event1
+Member:
+ Member1:
+  MembershipExpiry: 2017-07-28
+Invoice:
+ SingleTicketInvoice:
+  TxnId: SingleTicketInvoice
+  Status: processing
+  Member: =>Member.Member1
+InvoiceLine:
+ SingleTicketInvoiceLine:
+  Amount: 1
+  Invoice: =>Invoice.SingleTicketInvoice
+  Item: =>EventTicketType.AdultTicketType
+  

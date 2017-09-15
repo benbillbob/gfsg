@@ -12,3 +12,12 @@ Member:
 Group:
   extensions:
    - GFSGGroupExtension
+Email:
+  admin_email: ben@benbillbob.com
+SiteConfig:
+  extensions:
+   - MySiteConfig
+SSViewer:
+  source_file_comments: false
+Only:
+  environment: 'dev'

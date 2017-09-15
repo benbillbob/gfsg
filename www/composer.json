@@ -13,7 +13,9 @@
 		"sunnysideup/themes_ssu_flava": "^4.2",
 		"rywa/silverstripe-minicart": "^1.0",
 		"jonshutt/silverstripe-sortable-gallery-field": "dev-master",
-		"silverstripers/silverstripe-timefield": "dev-master"
+		"silverstripers/silverstripe-timefield": "dev-master",
+		"picqer/php-barcode-generator": "^0.2.1",
+		"paragonie/random_compat": "^2.0"
 	},
 	"require-dev": {
 		"phpunit/PHPUnit": "~3.7@stable"
