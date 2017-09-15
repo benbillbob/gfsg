@@ -1,4 +1,5 @@
 <footer class="footer" role="contentinfo">
+	<img src="$ThemeDir/images/wavey.png">
 	<div class="inner">
 		<div class="unit size4of4 lastUnit">
 			<div class="left">
