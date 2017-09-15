@@ -4,8 +4,10 @@
 				<img src="{$Up.Link}barcode/$Barcode"></img>
 				<figcaption class="caption">$Barcode</figcaption>
 			</figure>
+			<ul>
 			<% loop $EventTicketLines %>
-				$Quantity x $EventTicketType.ItemName
+				<li>$Quantity x $EventTicketType.ItemName</li>
 			<% end_loop %>
+			</ul>
 		<% end_with %>
 </div>

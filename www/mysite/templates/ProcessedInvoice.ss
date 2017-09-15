@@ -2,7 +2,7 @@
 
 Your purchase of
 <ul>
-    <% loop $InvoiceLines.Limit(1) %>
+    <% loop $InvoiceLines %>
         <li>$Item.ItemName</li>
     <% end_loop %>
 	

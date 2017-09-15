@@ -9,6 +9,7 @@ class PayPalReturnPage_Controller extends Page_Controller
 {
 	public function init() 
 	{
+		Requirements::customScript('paypal.minicart.reset();', 'minicart_reset');
 		parent::init();
 	}
 	

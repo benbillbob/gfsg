@@ -39,7 +39,7 @@ class InvoiceLine extends DataObject {
 	
 	private function processItem($member)
 	{
-		$body = $this->ItemName;
+		$body = $this->Item()->ItemName;
 		
 		$email = new Email();
 		$email
@@ -75,7 +75,7 @@ class InvoiceLine extends DataObject {
 	{
 		$member->Groups()->add($membership->Group());
 		
-		$member->Membership = $membership;
+		$member->MembershipID = $membership->ID;
 		$member->MembershipExpiry = $membershipExpiry->format("Y-m-d");
 		$member->write();
 	}
