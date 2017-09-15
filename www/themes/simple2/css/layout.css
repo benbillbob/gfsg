@@ -425,8 +425,7 @@ body h1 span.amp {
 
 /* FOOTER */
 .footer {
-    color: #999;
-    background: #ededed;
+	background-image: url('../images/wavey.png');
     padding: 20px 0;
     font-size: 11px;
     line-height: 22px;
