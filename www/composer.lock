@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d72007f93586c4221e8ce57c8df11494",
+    "content-hash": "7ea388c99d87a7ce16357269b4342023",
     "packages": [
         {
             "name": "composer/installers",
@@ -781,6 +781,60 @@
                 "silverstripe"
             ],
             "time": "2016-03-23 03:25:25"
+        },
+        {
+            "name": "studiobonito/silverstripe-google-analytics",
+            "version": "2.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/studiobonito/silverstripe-google-analytics.git",
+                "reference": "cd4bf48912168bf3a7ebf59dc09897045d4633eb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/studiobonito/silverstripe-google-analytics/zipball/cd4bf48912168bf3a7ebf59dc09897045d4633eb",
+                "reference": "cd4bf48912168bf3a7ebf59dc09897045d4633eb",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "silverstripe/cms": ">=3.1.2,<4.0",
+                "silverstripe/framework": ">=3.1.2,<4.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "0.9.*",
+                "phpunit/phpunit": "4.*",
+                "scrutinizer/ocular": "~1.1",
+                "symfony/class-loader": "~2.3"
+            },
+            "type": "silverstripe-module",
+            "autoload": {
+                "psr-4": {
+                    "StudioBonito\\SilverStripe\\GoogleAnalytics\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Tom Densham",
+                    "email": "tom.densham@studiobonito.co.uk",
+                    "homepage": "http://www.studiobonito.co.uk",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Provide basic Google Analytics integration for SilverStripe CMS.",
+            "homepage": "https://github.com/studiobonito/silverstripe-google-analytics",
+            "keywords": [
+                "analytics",
+                "google",
+                "silverstripe",
+                "silverstripe-google-analytics",
+                "studiobonito"
+            ],
+            "time": "2016-04-28T08:05:21+00:00"
         },
         {
             "name": "sunnysideup/themes_ssu_flava",

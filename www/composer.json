@@ -17,7 +17,8 @@
 		"picqer/php-barcode-generator": "^0.2.1",
 		"paragonie/random_compat": "^2.0",
 		"silverstripe/userforms": "^4.5",
-		"undefinedoffset/silverstripe-nocaptcha": "^0.4.0"
+		"undefinedoffset/silverstripe-nocaptcha": "^0.4.0",
+		"studiobonito/silverstripe-google-analytics": "^2.0"
 	},
 	"require-dev": {
 		"phpunit/PHPUnit": "~3.7@stable"

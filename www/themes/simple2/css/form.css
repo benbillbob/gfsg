@@ -178,7 +178,7 @@ form .message {
 }
 form .date .middleColumn input {
     /*background: transparent url(../images/icons/your_icon_here.png) no-repeat scroll 90px 5px;*/
-    width: 114px;
+    width: 220px;
 }
 .Actions input.resetformaction,
 .Actions input.action-minor {                  /* Clear button */
