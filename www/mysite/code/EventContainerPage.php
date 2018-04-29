@@ -29,6 +29,11 @@ class EventContainerPage_Controller extends InvoicePage_Controller
 			jQuery("#calendar").fullCalendar({
 				events: "'.$this->data()->Link().'events"
 			});
+			jQuery("#PrintButton").click(function()
+			{
+				window.print();
+				return false;
+			});
 		});');
 		parent::init();
 	}
