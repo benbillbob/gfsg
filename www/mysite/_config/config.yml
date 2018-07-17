@@ -5,7 +5,7 @@ After:
   - 'cms/*'
 ---
 SSViewer:
-  theme: 'simple'
+  theme: 'gfsg'
 Member:
   extensions:
    - GFSGMemberExtension
